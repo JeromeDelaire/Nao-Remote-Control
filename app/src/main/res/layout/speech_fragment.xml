@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/ConnexionFragmentTitle"
+            style="@style/Title"
+            android:text="@string/Speech" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/Speech"
+                style="@style/EditTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ServerIPAdressTextView"
+                android:digits="0123456789."
+                android:hint="@string/TypeYourSpeech"
+                android:inputType="number"
+                android:theme="@style/EditTextStyle" />
+
+            <Button
+                android:id="@+id/SpeakButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/speak" />
+
+            <Button
+                android:id="@+id/SaveSpeechButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/SpeakButton"
+                android:background="@drawable/save"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/divider"></include>
+
+        <TextView
+            style="@style/SubTitle"
+            android:text="@string/SavedSpeeches"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/SpinnerSpeech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+            <Button
+                android:id="@+id/RemoveSpeech"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/trash" />
+
+            <Button
+                android:id="@+id/SpeakButton2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/speak" />
+        </LinearLayout>
+
+        <include layout="@layout/divider"></include>
+
+        <TextView
+            style="@style/SubTitle"
+            android:text="@string/Settings"/>
+
+        <TextView
+            style="@style/NormalText"
+            android:text="@string/Volume"
+            android:gravity="center"
+            />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:thumbTint="@color/Primary"
+            android:progressBackgroundTint="@color/Secondary"
+            android:progressTint="@color/Primary"/>
+
+        <TextView
+            style="@style/NormalText"
+            android:text="@string/Langage"
+            android:gravity="center"
+            />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/divider" />
+
+    <TextView
+        style="@style/SubTitle"
+        android:text="@string/RobotConnexion" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/RobotIPAdressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="@string/RobotAdress"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/RobotIPAdress"
+            style="@style/EditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/RobotIPAdressTextView"
+            android:digits="0123456789."
+            android:hint="@string/IPAddressFormat"
+            android:inputType="number"
+            android:theme="@style/EditTextStyle" />
+
+        <Button
+            android:id="@+id/LoginRobotButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/login" />
+
+        <Button
+            android:id="@+id/SaveRobotAdressButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/LoginRobotButton"
+            android:background="@drawable/save"
+            android:textAllCaps="false" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/AutomaticRobotConnexionButton"
+        style="@style/Element"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/AutoConnexion"
+        android:textAllCaps="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/SpinnerRobotAdress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+        <Button
+            android:id="@+id/RemoveRobotAdressButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/trash" />
+
+        <Button
+            android:id="@+id/LoginRobotButton2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/login" />
+    </LinearLayout>
+
+</LinearLayout>

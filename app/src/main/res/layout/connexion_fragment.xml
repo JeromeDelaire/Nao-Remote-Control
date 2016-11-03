@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout
+        android:id="@+id/ConnexionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ConnexionFragmentTitle"
+            style="@style/Title"
+            android:text="@string/ServerSettings" />
+
+        <TextView
+            style="@style/SubTitle"
+            android:text="@string/ServerConnexion" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ServerIPAdressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/ServerAdress"
+                android:textSize="18dp" />
+
+            <EditText
+                android:id="@+id/IPAdressServer"
+                style="@style/EditTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ServerIPAdressTextView"
+                android:digits="0123456789."
+                android:hint="@string/IPAddressFormat"
+                android:inputType="number"
+                android:theme="@style/EditTextStyle" />
+
+            <Button
+                android:id="@+id/LoginServerButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/login" />
+
+            <Button
+                android:id="@+id/SaveServerAdressButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/LoginServerButton"
+                android:background="@drawable/save"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/AutomaticConnexionButton"
+            style="@style/Element"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/AutoConnexion"
+            android:textAllCaps="false" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/SpinnerServerAdress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+            <Button
+                android:id="@+id/RemoveServerAdressButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/trash" />
+
+            <Button
+                android:id="@+id/LoginServerButton2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/login" />
+        </LinearLayout>
+
+        <include layout="@layout/divider"/>
+
+        <TextView
+            style="@style/SubTitle"
+            android:text="@string/ConnexionStatus"/>
+
+        <TextView
+            android:id="@+id/ConnexionStatusTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Disconected"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/Text"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/ConnexionStatusButton"
+            style="@style/Element"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:text="@string/Disconected" />
+
+        <include layout="@layout/server_config"
+            android:visibility="gone"
+            android:id="@+id/ServerConfigLayout"></include>
+
+    </LinearLayout>
+
+
+</ScrollView>
+
