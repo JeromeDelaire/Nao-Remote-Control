@@ -18,11 +18,11 @@ import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.STOP
 
 public class Server extends AsyncTask<Void, Void, Void> {
 
-    private String dstAddress;
-    private int dstPort;
-    private Socket socket = null;
-    private PrintWriter out;
-    private int state ;
+    private static String dstAddress;
+    private static int dstPort;
+    private static Socket socket = null;
+    private static PrintWriter out;
+    private static int state ;
 
     public Server(String addr, int port, View v) {
         dstAddress = addr;
@@ -69,5 +69,10 @@ public class Server extends AsyncTask<Void, Void, Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void send(String message){
+        out.println(message);
+        out.flush();
     }
 }

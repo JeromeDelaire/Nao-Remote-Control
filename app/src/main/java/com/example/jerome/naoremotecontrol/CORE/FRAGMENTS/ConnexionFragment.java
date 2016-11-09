@@ -14,9 +14,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jerome.naoremotecontrol.CORE.NETWORK.Reception;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 import com.example.jerome.naoremotecontrol.R;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.PORT;
@@ -36,6 +41,7 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
     private TextView connexionState ;
     private ProgressBar connexionProgress ;
     private View serverConfig ;
+    private BufferedReader in ;
 
 
     @Override
@@ -160,6 +166,13 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             connexionStatus.setVisibility(View.VISIBLE);
             connexionState.setText(R.string.Connected);
             serverConfig.setVisibility(View.VISIBLE);
+            try {
+                in = new BufferedReader(new InputStreamReader(server.getSocket().getInputStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread t = new Thread(new Reception(in));
+            t.start();
         }
         else
         {

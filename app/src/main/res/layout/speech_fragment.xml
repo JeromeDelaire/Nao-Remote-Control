@@ -20,12 +20,10 @@
             <EditText
                 android:id="@+id/Speech"
                 style="@style/EditTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/ServerIPAdressTextView"
-                android:digits="0123456789."
                 android:hint="@string/TypeYourSpeech"
-                android:inputType="number"
                 android:theme="@style/EditTextStyle" />
 
             <Button

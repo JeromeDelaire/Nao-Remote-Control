@@ -10,5 +10,6 @@ public interface Constants {
     String SPEECH_FILE = "Speech.txt" ;
     int PORT = 38771 ;
     String CONFIGURATION = "C/";
-    String STOP_CONNEXION = "stop" ;
+    String STOP_CONNEXION = "stop";
+    String SPEECH = "S/";
 }
