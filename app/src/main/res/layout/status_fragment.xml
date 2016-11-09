@@ -1,6 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView style="@style/Title"
+        android:text="@string/Status" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,5 +31,37 @@
         android:layout_margin="10dp"
         android:text="@string/ChangeName"
         android:textAllCaps="false"/>
+
+    <include layout="@layout/divider" />
+
+    <TextView style="@style/SubTitle"
+        android:text="@string/LEDConfig"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/LeftEyeButton"
+            style="@style/Element"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/LeftEye"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/RightEyeButton"
+            style="@style/Element"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            android:text="@string/RightEye"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
 
 </LinearLayout>

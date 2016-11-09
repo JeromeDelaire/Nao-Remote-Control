@@ -36,4 +36,7 @@
     <string name="Name">Name : </string>
     <string name="ChangeName">Change name</string>
     <string name="SpeechSaveSucces">Speech saved !</string>
+    <string name="LeftEye">Left eye</string>
+    <string name="RightEye">Right eye</string>
+    <string name="LEDConfig">LED configuration</string>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.ConnexionFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
+import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.StatusFragment;
 import com.example.jerome.naoremotecontrol.CORE.MyPagerAdapter;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 
@@ -34,6 +35,7 @@ public class MainActivity extends FragmentActivity {
             // Ajout des Fragments dans la liste
             fragments.add(Fragment.instantiate(this,ConnexionFragment.class.getName()));
             fragments.add(Fragment.instantiate(this,SpeechFragment.class.getName()));
+            fragments.add(Fragment.instantiate(this,StatusFragment.class.getName()));
 
             // Création de l'adapter qui s'occupera de l'affichage de la liste de
             // Fragments
