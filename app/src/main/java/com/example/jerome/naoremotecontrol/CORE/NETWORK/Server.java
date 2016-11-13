@@ -3,6 +3,9 @@ package com.example.jerome.naoremotecontrol.CORE.NETWORK;
 import android.os.AsyncTask;
 import android.view.View;
 
+import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
@@ -10,6 +13,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.CONFIGURATION;
+import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.STOP_CONNEXION;
 
 /**
@@ -34,7 +38,7 @@ public class Server extends AsyncTask<Void, Void, Void> {
         return socket;
     }
 
-    public int getState() {
+    public static int getState() {
         return state;
     }
 
@@ -72,6 +76,8 @@ public class Server extends AsyncTask<Void, Void, Void> {
     }
 
     public static void send(String message){
+        message = message.replaceAll("[\r\n]+", " ");
+        FileOperator.writeFile(DIRECTORY_NAME, "test.txt", message);
         out.println(message);
         out.flush();
     }

@@ -39,4 +39,5 @@
     <string name="LeftEye">Left eye</string>
     <string name="RightEye">Right eye</string>
     <string name="LEDConfig">LED configuration</string>
+    <string name="AnimatedSpeech">Animated speech</string>
 </resources>

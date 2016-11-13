@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Reception;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
@@ -39,10 +39,9 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
     private Spinner listServerAdress ;
     private Server server ;
     private TextView connexionState ;
-    private ProgressBar connexionProgress ;
     private View serverConfig ;
     private BufferedReader in ;
-
+    private Thread thread_reception ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -147,6 +146,7 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         // Si on clique sur le bouton de deconnexion
         if(view == connexionStatus)
         {
+           // thread_reception.stop();
             server.stopConnexion();
             connexionStatus.setVisibility(View.GONE);
             connexionState.setText(R.string.Disconected);
@@ -171,8 +171,11 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Thread t = new Thread(new Reception(in));
-            t.start();
+
+            thread_reception = new Thread(new Reception(in));
+            thread_reception.start();
+
+            Server.send(Constants.GET + Constants.VOLUME);
         }
         else
         {
