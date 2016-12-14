@@ -17,6 +17,7 @@ import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Reception;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
+import com.example.jerome.naoremotecontrol.MainActivity;
 import com.example.jerome.naoremotecontrol.R;
 
 import java.io.BufferedReader;
@@ -46,10 +47,22 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        server = new Server("0.0.0.0", PORT, getView());
+        if(Server.getState()==0)server = new Server("0.0.0.0", PORT, getView());
         return inflater.inflate(R.layout.connexion_fragment, container, false);
 
     }
+
+    // Maj de l'affichage de connexion lorsque le fragment est recrée
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(Server.getState()==1){
+            connexionStatus.setVisibility(View.VISIBLE);
+            connexionState.setText(R.string.Connected);
+            serverConfig.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
@@ -159,6 +172,7 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         // On se connecte au serveur
         server = new Server(ip, PORT, getView());
         server.execute();
+
         //Si la connection a réussie on active le bouton de déconnexion
         while(server.getState()==0);
 
@@ -175,7 +189,12 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             thread_reception = new Thread(new Reception(in));
             thread_reception.start();
 
+            // Demande d'informations au sur le robot au serveur
+            Server.send(Constants.GET + Constants.LANGAGES);
+            Server.send(Constants.GET + Constants.VOICES);
             Server.send(Constants.GET + Constants.VOLUME);
+            Server.send(Constants.GET + Constants.POST_LIST);
+            Server.send(Constants.GET + Constants.BEHAVIOR);
         }
         else
         {

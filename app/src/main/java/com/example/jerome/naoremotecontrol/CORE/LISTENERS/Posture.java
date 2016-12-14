@@ -1,19 +1,21 @@
 package com.example.jerome.naoremotecontrol.CORE.LISTENERS;
 
+import java.util.ArrayList;
+
 /**
- * Created by jerome on 12/11/16.
+ * Created by jerome on 30/11/16.
  */
 
-public class Volume {
-    private static int volume = -1;
-    private static ChangeListener listener;
+public class Posture {
+    private static ArrayList<String > postures ;
+    private static ChangeListener listener ;
 
-    public static int getVolume() {
-        return volume;
+    public static ArrayList<String> getPostures() {
+        return postures;
     }
 
-    public static void setVolume(int vol) {
-        volume = vol ;
+    public static void setPostures(ArrayList<String> pos) {
+        postures = pos ;
         if (listener != null) listener.onChange();
     }
 

@@ -40,4 +40,16 @@
     <string name="RightEye">Right eye</string>
     <string name="LEDConfig">LED configuration</string>
     <string name="AnimatedSpeech">Animated speech</string>
+    <string name="Move">Move</string>
+    <string name="Dances">Dances</string>
+    <string name="Posture">Posture</string>
+    <string name="TakePosture">Take posture</string>
+    <string name="Walk">Walk</string>
+    <string name="PitchShift">Voice pitch shift</string>
+    <string name="SecondVoice">Second voice frequency</string>
+    <string name="SecondVoiceLevel">Second voice level</string>
+    <string name="SecondVoiceTimeShift">Second voice time shift</string>
+    <string name="Voice">Voice</string>
+    <string name="Behavior">Behavior</string>
+    <string name="SetBehavior">Set behavior</string>
 </resources>

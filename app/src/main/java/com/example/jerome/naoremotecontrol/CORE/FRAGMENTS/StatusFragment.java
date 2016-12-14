@@ -27,8 +27,8 @@ public class StatusFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.status_fragment, container, false);
-
     }
+
 
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class StatusFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onColorSelected(int color) {
-               // showToast(color);
+               //
                 String hex = String.format("0x00%02x%02x%02x", Color.red(color), Color.green(color), Color.blue(color));
                 Server.send(Constants.SETTING + Constants.LED + Constants.ALL_LEDS + hex);
             }

@@ -30,19 +30,19 @@
                 />
 
             <Button
-                android:id="@+id/SpeakButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/speak" />
-
-            <Button
                 android:id="@+id/SaveSpeechButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/save"
                 android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/SpeakButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/speak" />
 
         </LinearLayout>
 
@@ -101,9 +101,37 @@
 
         <TextView
             style="@style/NormalText"
+            android:text="@string/PitchShift"
+            android:gravity="center"
+            />
+
+        <SeekBar
+            android:id="@+id/PitchShiftSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:thumbTint="@color/Primary"
+            android:progressBackgroundTint="@color/Secondary"
+            android:progressTint="@color/Primary"
+            android:max="31"/>
+
+        <TextView
+            style="@style/NormalText"
+            android:text="@string/Voice"
+            android:gravity="center"
+            />
+
+
+        <TextView
+            style="@style/NormalText"
             android:text="@string/Langage"
             android:gravity="center"
             />
+
+        <Spinner
+            android:id="@+id/VoiceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
 
         <Spinner
             android:id="@+id/LangageSpinner"

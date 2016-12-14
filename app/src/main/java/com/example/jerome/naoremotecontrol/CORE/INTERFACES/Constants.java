@@ -31,10 +31,23 @@ public interface Constants{
             String LEFT_EYE = "LEC/" ;
             String ALL_LEDS = "ALL/" ;
         String LANGAGE = "LAN/";
-
+        //Réglage de la fréquence de lavoix
+        String PITCH_SHIFTING = "PTS/" ;
+        // Choix de la voix
+        String SPEAKING_VOICE = "SPV/" ;
 
     // Demande d'informations
     String GET = "GET/";
         //String VOLUME = " VOL/" ;
+        String POST_LIST = "POS/" ;
+        String VOICES = "VOI/" ;
+        String LANGAGES = "ALN/" ;
+        //String BEHAVIOUR
+
+    //Réglage de comportement
+    String BEHAVIOR = "BHV/" ;
+
+    // Faire bouger le robot
+    String MOVE = "MOV/";
 
 }

@@ -48,19 +48,19 @@
                 />
 
             <Button
-                android:id="@+id/LoginServerButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/login" />
-
-            <Button
                 android:id="@+id/SaveServerAdressButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/save"
                 android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/LoginServerButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/login" />
 
         </LinearLayout>
 

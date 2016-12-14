@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.ConnexionFragment;
+import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.MoveFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.StatusFragment;
 import com.example.jerome.naoremotecontrol.CORE.MyPagerAdapter;
+import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 
 import java.util.List;
@@ -34,11 +36,11 @@ public class MainActivity extends FragmentActivity {
 
             // Ajout des Fragments dans la liste
             fragments.add(Fragment.instantiate(this,ConnexionFragment.class.getName()));
-            fragments.add(Fragment.instantiate(this,SpeechFragment.class.getName()));
             fragments.add(Fragment.instantiate(this,StatusFragment.class.getName()));
+            fragments.add(Fragment.instantiate(this,SpeechFragment.class.getName()));
+            fragments.add(Fragment.instantiate(this, MoveFragment.class.getName()));
 
-            // Création de l'adapter qui s'occupera de l'affichage de la liste de
-            // Fragments
+            // Création de l'adapter qui s'occupera de l'affichage de la liste de Fragments
             this.mPagerAdapter = new MyPagerAdapter(super.getSupportFragmentManager(), fragments);
 
             ViewPager pager = (ViewPager) super.findViewById(R.id.ViewPager);

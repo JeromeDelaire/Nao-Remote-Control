@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <LinearLayout
+        android:id="@+id/ConnexionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ConnexionFragmentTitle"
+            style="@style/Title"
+            android:text="@string/Move" />
+
+        <TextView
+            style="@style/SubTitle"
+            android:text="@string/Posture"/>
+
+        <Spinner
+            android:id="@+id/PostureSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+        <Button
+            android:id="@+id/TakePosture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Element"
+            android:layout_margin="10dp"
+            android:text="@string/TakePosture"/>
+
+        <include layout="@layout/divider"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SubTitle"
+            android:text="@string/Behavior"/>
+        <Spinner
+            android:id="@+id/BehaviorSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+        <Button
+            android:id="@+id/SetBehaviorButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Element"
+            android:layout_margin="10dp"
+            android:text="@string/SetBehavior"/>
+
+        <include layout="@layout/divider"></include>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SubTitle"
+            android:text="@string/Walk"/>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
+

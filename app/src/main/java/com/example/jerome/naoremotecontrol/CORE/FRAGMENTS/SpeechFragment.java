@@ -16,17 +16,26 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Langages;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
+import com.example.jerome.naoremotecontrol.CORE.NETWORK.Reception;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 import com.example.jerome.naoremotecontrol.R;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.RunnableFuture;
+import java.util.logging.Handler;
 
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.ANIMATION;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
+import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.LANGAGE;
+import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.LANGAGES;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.NO_ANIMATION;
+import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.PITCH_SHIFTING;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SAY;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SPEECH_FILE;
 
@@ -34,18 +43,37 @@ import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SPEE
  * Created by Jerome on 01/11/2016.
  */
 
-public class SpeechFragment extends Fragment implements View.OnClickListener, Observer{
+public class SpeechFragment extends Fragment implements View.OnClickListener{
 
+    private static ArrayList<String> availableVoices = null;
     private EditText speech ;
     private Button saveSpeech, saySpeech, saySavedSpeech, deleteSpeech, removeSpeech ;
     private Server server ;
-    private Spinner speechesList, langages ;
-    private SeekBar volumeBar ;
+    private Spinner speechesList, langages, voicesList ;
+    private SeekBar volumeBar, pitchShift;
     private CheckBox animatedSpeech ;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.speech_fragment, container, false);
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible) {
+            if(Langages.getLangages()!=null){
+                ArrayAdapter<String> langagesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Langages.getLangages());
+                langages.setAdapter(langagesAdapter);
+            }
+            if(availableVoices != null){
+                ArrayAdapter<String> voicesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availableVoices);
+                voicesList.setAdapter(voicesAdapter);
+            }
+            if(Volume.getVolume()!=-1) {
+                volumeBar.setProgress(Volume.getVolume());
+            }
+        }
     }
 
     @Override
@@ -57,8 +85,10 @@ public class SpeechFragment extends Fragment implements View.OnClickListener, Ob
         speechesList = (Spinner) view.findViewById(R.id.SpinnerSpeech);
         removeSpeech = (Button) view.findViewById(R.id.RemoveSpeech);
         volumeBar = (SeekBar) view.findViewById(R.id.VolumeSeekBar);
+        pitchShift = (SeekBar) view.findViewById(R.id.PitchShiftSeekBar);
         animatedSpeech = (CheckBox) view.findViewById(R.id.AnimatedSpeech);
         langages = (Spinner) view.findViewById(R.id.LangageSpinner);
+        voicesList = (Spinner) view.findViewById(R.id.VoiceSpinner);
 
         // Initialisation des discours sauvegardés
         initSpinner();
@@ -76,9 +106,12 @@ public class SpeechFragment extends Fragment implements View.OnClickListener, Ob
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         Volume vol = new Volume();
@@ -88,28 +121,52 @@ public class SpeechFragment extends Fragment implements View.OnClickListener, Ob
                 volumeBar.setProgress(Volume.getVolume());
             }
         });
+
     }
 
     @Override
     public void onClick(View view) {
 
+        float val = pitchShift.getProgress()+9 ;
+        val /= 10 ;
+        String shifting_value = Float.toString(val);
+
         //Si on clique sur le bouton parler 1
         if(view == saySpeech){
+
+            // Sélection de la voix
+            Server.send(Constants.SETTING + Constants.SPEAKING_VOICE + voicesList.getSelectedItem());
+
+            // Choix de la langue
             Server.send(Constants.SETTING + Constants.LANGAGE + langages.getSelectedItem().toString());
 
+            // Réglages de la voix
+            Server.send(Constants.SETTING + Constants.PITCH_SHIFTING + shifting_value);
+
+            // Discours normal
             if(!animatedSpeech.isChecked())
                 Server.send(SAY + NO_ANIMATION + speech.getText().toString());
             else
+                // Discours animé
                 Server.send(Constants.SAY + Constants.ANIMATION + speech.getText().toString());
         }
 
         //Si on clique sur le bouton parler 2
         if(view == saySavedSpeech){
 
+            // Sélection de la voix
+            Server.send(Constants.SETTING + Constants.SPEAKING_VOICE + voicesList.getSelectedItem());
+
+            // Choix de la langue
             Server.send(Constants.SETTING + Constants.LANGAGE + langages.getSelectedItem().toString());
 
+            // Réglages de la voix
+            Server.send(Constants.SETTING + Constants.PITCH_SHIFTING + shifting_value);
+
+            // Discours normal
             if(!animatedSpeech.isChecked())
                 Server.send(SAY + NO_ANIMATION + speechesList.getSelectedItem().toString());
+            //Discours animé
             else
                 Server.send(Constants.SAY + Constants.ANIMATION + speechesList.getSelectedItem().toString());
         }
@@ -148,14 +205,9 @@ public class SpeechFragment extends Fragment implements View.OnClickListener, Ob
         String[] list = FileOperator.getLignes(DIRECTORY_NAME, SPEECH_FILE);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, list);
         speechesList.setAdapter(adapter);
-
-        String[] list_lang = {"French", "English"};
-        ArrayAdapter<String> adapter_lang = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, list_lang);
-        langages.setAdapter(adapter_lang);
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-
+    public static void setAvailableVoices(ArrayList<String> voices){
+        availableVoices = voices ;
     }
 }
