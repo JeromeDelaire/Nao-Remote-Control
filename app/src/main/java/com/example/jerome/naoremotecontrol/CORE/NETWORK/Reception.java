@@ -1,32 +1,14 @@
 package com.example.jerome.naoremotecontrol.CORE.NETWORK;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.SeekBar;
-import android.widget.Toast;
-
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.MoveFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
+import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.StatusFragment;
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
-import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Langages;
-import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
-import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
-import com.example.jerome.naoremotecontrol.R;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
-import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.VOLUME;
 
 /**
  * Created by Jerome on 01/11/2016.
@@ -86,7 +68,7 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst("/", "");
                                 }
 
-                               Posture.setPostures(postures);
+                                MoveFragment.setAvailablePostures(postures);
                                 break;
 
                             // Si on recoit la liste des langages disponibles
@@ -111,7 +93,7 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst("/", "");
                                 }
 
-                                Langages.setLangages(langages);
+                                SpeechFragment.setAvailableLangages(langages);
 
                                 break;
 
@@ -165,6 +147,12 @@ public class Reception implements Runnable{
 
                                 MoveFragment.setAvailableBehavior(behavior);
 
+                                break;
+
+                            // Si on reçoit le nom du robot
+                            case Constants.NAO_NAME :
+                                data = data.replaceAll(Constants.NAO_NAME, "");
+                                StatusFragment.setName(data);
                                 break;
                         }
 

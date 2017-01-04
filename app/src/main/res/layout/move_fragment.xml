@@ -62,6 +62,14 @@
             style="@style/SubTitle"
             android:text="@string/Walk"/>
 
+        <Button
+            android:id="@+id/WalkButton"
+            style="@style/Element"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/accel_state"/>
 
     </LinearLayout>
 

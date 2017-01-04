@@ -43,11 +43,20 @@ public interface Constants{
         String VOICES = "VOI/" ;
         String LANGAGES = "ALN/" ;
         //String BEHAVIOUR
+        String NAO_NAME = "NAO/" ;
 
     //Réglage de comportement
     String BEHAVIOR = "BHV/" ;
 
     // Faire bouger le robot
     String MOVE = "MOV/";
+
+    // Faire marcher le robot
+    String WALK = "WLK/" ;
+        String TURN_LEFT = "WTL/";
+        String TURN_RIGHT = "WTR/";
+        String TOWARD = "WTW/";
+        String BACKWARD = "WBW/";
+    String STOP_WALK = "STW/";
 
 }

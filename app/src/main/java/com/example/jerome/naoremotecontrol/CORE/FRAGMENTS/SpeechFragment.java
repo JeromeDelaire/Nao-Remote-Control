@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,26 +15,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
-import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Langages;
-import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
-import com.example.jerome.naoremotecontrol.CORE.NETWORK.Reception;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 import com.example.jerome.naoremotecontrol.R;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.RunnableFuture;
-import java.util.logging.Handler;
 
-import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.ANIMATION;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
-import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.LANGAGE;
-import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.LANGAGES;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.NO_ANIMATION;
-import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.PITCH_SHIFTING;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SAY;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SPEECH_FILE;
 
@@ -45,7 +33,7 @@ import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SPEE
 
 public class SpeechFragment extends Fragment implements View.OnClickListener{
 
-    private static ArrayList<String> availableVoices = null;
+    private static ArrayList<String> availableVoices = null, availableLangages = null;
     private EditText speech ;
     private Button saveSpeech, saySpeech, saySavedSpeech, deleteSpeech, removeSpeech ;
     private Server server ;
@@ -62,8 +50,8 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
     public void setMenuVisibility(final boolean visible) {
         super.setMenuVisibility(visible);
         if (visible) {
-            if(Langages.getLangages()!=null){
-                ArrayAdapter<String> langagesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, Langages.getLangages());
+            if(availableLangages!=null){
+                ArrayAdapter<String> langagesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availableLangages);
                 langages.setAdapter(langagesAdapter);
             }
             if(availableVoices != null){
@@ -209,5 +197,9 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
 
     public static void setAvailableVoices(ArrayList<String> voices){
         availableVoices = voices ;
+    }
+
+    public static void setAvailableLangages(ArrayList<String> langages){
+        availableLangages = langages ;
     }
 }

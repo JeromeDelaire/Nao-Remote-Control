@@ -195,6 +195,7 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             Server.send(Constants.GET + Constants.VOLUME);
             Server.send(Constants.GET + Constants.POST_LIST);
             Server.send(Constants.GET + Constants.BEHAVIOR);
+            Server.send(Constants.GET + Constants.NAO_NAME);
         }
         else
         {

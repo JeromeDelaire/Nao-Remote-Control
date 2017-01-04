@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
@@ -22,6 +24,8 @@ import com.example.jerome.naoremotecontrol.R;
 public class StatusFragment extends Fragment implements View.OnClickListener {
 
     private Button rightEye, leftEye ;
+    private static String name = "";
+    private TextView nameDisplay ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,11 +33,20 @@ public class StatusFragment extends Fragment implements View.OnClickListener {
         return inflater.inflate(R.layout.status_fragment, container, false);
     }
 
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (visible) {
+            nameDisplay.setText(getResources().getText(R.string.Name) + " " + name);
+        }
+    }
+
 
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         rightEye = (Button) view.findViewById(R.id.RightEyeButton);
         leftEye = (Button) view.findViewById(R.id.LeftEyeButton);
+        nameDisplay = (TextView) view.findViewById(R.id.nameEditText);
 
         rightEye.setOnClickListener(this);
         leftEye.setOnClickListener(this);
@@ -75,5 +88,9 @@ public class StatusFragment extends Fragment implements View.OnClickListener {
 
         });
         colorPickerDialog.show();
+    }
+
+    public static void setName(String nao_name){
+        name = nao_name ;
     }
 }

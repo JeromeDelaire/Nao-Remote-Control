@@ -120,6 +120,11 @@
             android:gravity="center"
             />
 
+        <Spinner
+            android:id="@+id/VoiceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
 
         <TextView
             style="@style/NormalText"
@@ -127,11 +132,6 @@
             android:gravity="center"
             />
 
-        <Spinner
-            android:id="@+id/VoiceSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@android:style/Theme.Holo.Light"></Spinner>
 
         <Spinner
             android:id="@+id/LangageSpinner"
