@@ -2,6 +2,7 @@ package com.example.jerome.naoremotecontrol.CORE.FRAGMENTS;
 
 import android.content.Context;
 import android.graphics.Path;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -81,11 +82,13 @@ public class MoveFragment extends Fragment implements SensorEventListener{
                     case MotionEvent.ACTION_DOWN:
                         // PRESSED
                         walkPressed = true;
+                        walk.setBackgroundResource(R.drawable.accel_pressed);
                         return true;
                     case MotionEvent.ACTION_UP:
                         // RELEASED
                         walkPressed = false ;
-                        Server.send(Constants.STOP_WALK);
+                        if(Server.getState()==1)Server.send(Constants.STOP_WALK);
+                        walk.setBackgroundResource(R.drawable.accel);
                         return true;
                 }
                 return false;
@@ -95,14 +98,14 @@ public class MoveFragment extends Fragment implements SensorEventListener{
         setBehavior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Server.send(Constants.BEHAVIOR + behaviorList.getSelectedItem());
+                if(Server.getState()==1)Server.send(Constants.BEHAVIOR + behaviorList.getSelectedItem());
             }
         });
 
         takePosture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Server.send(Constants.MOVE + posturesList.getSelectedItem());
+                if(Server.getState()==1)Server.send(Constants.MOVE + posturesList.getSelectedItem());
             }
         });
     }
@@ -120,38 +123,38 @@ public class MoveFragment extends Fragment implements SensorEventListener{
         Sensor mySensor = sensorEvent.sensor;
 
         // Si l'acceléromètre a bougé
-        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER && walkPressed) {
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER && walkPressed && Server.getState()==1)  {
             boolean send = false ;
             String direction = "";
             int x = (int) sensorEvent.values[0];
             int y = (int) sensorEvent.values[1];
             int z = (int) sensorEvent.values[2];
-            if (x < -4 && lastX >= 0){
+            if (x < -2 && lastX >= 0){
                 lastX = x ;
-                direction += Constants.TURN_LEFT ;
+                direction += Constants.TURN_RIGHT ;
                 send = true ;
             }
-            else if(x > 4 && lastX <= 0) {
-                direction += Constants.TURN_RIGHT;
+            else if(x > 2 && lastX <= 0) {
+                direction += Constants.TURN_LEFT;
                 lastX = x;
                 send = true ;
-            }else if(x > -4 && x < -4){
+            }else if(x > -2 && x < 2 && (lastX < -2 || lastX > 2)){
                 direction += "NON/" ;
                 send = true;
                 lastX = x;
             }
-            if(y > 4 && lastY <= 0){
-                direction += Constants.TOWARD ;
+            else if(y > 2 && lastY <= 0){
+                direction += Constants.BACKWARD ;
                 lastY = y ;
                 send = true ;
-                direction += "NON/" ;
-            }else if(y < -4 && lastY >= 0){
-                direction += Constants.BACKWARD;
+            }else if(y < -2 && lastY >= 0){
+                direction += Constants.TOWARD;
                 lastY = y ;
                 send = true ;
-            }else if(y > -4 && y < -4){
+            }else if(y > -2 && y < 2 && (lastY < -2 || lastY > 2)){
                 send = true;
                 lastY = y ;
+                direction += "NON/" ;
             }
             if(send)Server.send(Constants.WALK + direction);
             send = false;

@@ -90,7 +90,7 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
         volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Server.send(Constants.SETTING + Constants.VOLUME + String.valueOf(volumeBar.getProgress()));
+                if(Server.getState()==1)Server.send(Constants.SETTING + Constants.VOLUME + String.valueOf(volumeBar.getProgress()));
             }
 
             @Override
@@ -120,7 +120,8 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
         String shifting_value = Float.toString(val);
 
         //Si on clique sur le bouton parler 1
-        if(view == saySpeech){
+        if(view == saySpeech  && voicesList.getChildCount()!=0 &&
+                langages.getChildCount()!=0 && speechesList.getChildCount()!=0){
 
             // Sélection de la voix
             Server.send(Constants.SETTING + Constants.SPEAKING_VOICE + voicesList.getSelectedItem());
@@ -140,7 +141,8 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
         }
 
         //Si on clique sur le bouton parler 2
-        if(view == saySavedSpeech){
+        if(view == saySavedSpeech && voicesList.getChildCount()!=0 &&
+                langages.getChildCount()!=0 && speechesList.getChildCount()!=0){
 
             // Sélection de la voix
             Server.send(Constants.SETTING + Constants.SPEAKING_VOICE + voicesList.getSelectedItem());
@@ -163,8 +165,8 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
         if(view == saveSpeech){
             String s_speech = speech.getText().toString();
             s_speech = s_speech.replaceAll("[\r\n]+", " ");
-            // Si le discours n'est pas déjà sauvegardée
-            if(!FileOperator.fileContain(DIRECTORY_NAME, SPEECH_FILE , s_speech))
+            // Si le discours n'est pas déjà sauvegardée && pas vide
+            if(!FileOperator.fileContain(DIRECTORY_NAME, SPEECH_FILE , s_speech) && s_speech.length() != 0)
             {
                 // On ajoute le discours dans le mémoire du téléphone
                 if(!FileOperator.writeFile(DIRECTORY_NAME, SPEECH_FILE, s_speech))

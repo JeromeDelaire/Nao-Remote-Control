@@ -4,6 +4,7 @@ import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.MoveFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.StatusFragment;
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Battery;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
 
 import java.io.BufferedReader;
@@ -153,6 +154,23 @@ public class Reception implements Runnable{
                             case Constants.NAO_NAME :
                                 data = data.replaceAll(Constants.NAO_NAME, "");
                                 StatusFragment.setName(data);
+                                break;
+
+                            // Si on reçoit le niveau de batterie
+                            case Constants.BATTERY :
+                                data = data.replaceAll(Constants.BATTERY, "");
+                                Battery.setBattery(data);
+                                break;
+
+                            case Constants.ROBOT_CONNECTED :
+                                // Demande d'informations sur le robot au serveur
+                                Server.send(Constants.GET + Constants.LANGAGES);
+                                Server.send(Constants.GET + Constants.VOICES);
+                                Server.send(Constants.GET + Constants.VOLUME);
+                                Server.send(Constants.GET + Constants.POST_LIST);
+                                Server.send(Constants.GET + Constants.BEHAVIOR);
+                                Server.send(Constants.GET + Constants.NAO_NAME);
+                                Server.send(Constants.GET + Constants.BATTERY);
                                 break;
                         }
 

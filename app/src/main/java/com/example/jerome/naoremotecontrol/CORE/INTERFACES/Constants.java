@@ -7,8 +7,9 @@ package com.example.jerome.naoremotecontrol.CORE.INTERFACES;
 public interface Constants{
     String DIRECTORY_NAME = "Nao Remote Control" ;
     String SERVER_IP_FILE = "IP.txt" ;
+    String ROBOT_IP_FILE = "robotIP.txt" ;
     String SPEECH_FILE = "Speech.txt" ;
-    int PORT = 38771 ;
+    int PORT = 35771 ;
 
 
     /*
@@ -17,6 +18,10 @@ public interface Constants{
     // Configurations du serveur
     String CONFIGURATION = "CFG/";
         String STOP_CONNEXION = "STP/";
+        String ROBOT_IP = "RIP/" ;
+
+    // Robot connecté
+    String ROBOT_CONNECTED = "RBC/" ;
 
     // Faire parler le robot
     String SAY = "SAY/";
@@ -44,6 +49,7 @@ public interface Constants{
         String LANGAGES = "ALN/" ;
         //String BEHAVIOUR
         String NAO_NAME = "NAO/" ;
+        String BATTERY = "BAT/" ;
 
     //Réglage de comportement
     String BEHAVIOR = "BHV/" ;

@@ -35,14 +35,16 @@ import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SERV
 
 public class ConnexionFragment extends Fragment implements View.OnClickListener {
 
-    private EditText serverAdress ;
-    private Button loginServer, loginServer2, saveServerAdress, removeServerAdress, connexionStatus ;
-    private Spinner listServerAdress ;
+    private EditText serverAdress, robotAdress ;
+    private Button loginServer, loginServer2, loginRobot, loginRobot2, saveServerAdress, saveRobotAdress,
+            removeServerAdress, removeRobotAdress, connexionStatus ;
+    private Spinner listServerAdress, listRobotAdress ;
     private Server server ;
     private TextView connexionState ;
     private View serverConfig ;
     private BufferedReader in ;
     private Thread thread_reception ;
+    private static boolean robot_connected = false ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,15 +69,25 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
 
+        // Widgets de connexion au serveur
         serverAdress = (EditText) view.findViewById(R.id.IPAdressServer);
         loginServer = (Button) view.findViewById(R.id.LoginServerButton);
         loginServer2 = (Button) view.findViewById(R.id.LoginServerButton2);
         saveServerAdress = (Button) view.findViewById(R.id.SaveServerAdressButton);
         removeServerAdress = (Button) view.findViewById(R.id.RemoveServerAdressButton);
         listServerAdress = (Spinner) view.findViewById(R.id.SpinnerServerAdress);
+
         connexionStatus = (Button) view.findViewById(R.id.ConnexionStatusButton);
         connexionState = (TextView) view.findViewById(R.id.ConnexionStatusTextView);
         serverConfig = (View) view.findViewById(R.id.ServerConfigLayout);
+
+        // Widgets de connexion au robot
+        robotAdress = (EditText) view.findViewById(R.id.RobotIPAdress);
+        loginRobot = (Button) view.findViewById(R.id.LoginRobotButton);
+        loginRobot2 = (Button) view.findViewById(R.id.LoginRobotButton2);
+        saveRobotAdress = (Button) view.findViewById(R.id.SaveRobotAdressButton);
+        removeRobotAdress = (Button) view.findViewById(R.id.RemoveRobotAdressButton);
+        listRobotAdress = (Spinner) view.findViewById(R.id.SpinnerRobotAdress);
 
         // Ajout des IP sauvegardés dans le spinner
         initSpinner();
@@ -86,13 +98,18 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         removeServerAdress.setOnClickListener(this);
         connexionStatus.setOnClickListener(this);
 
+        loginRobot.setOnClickListener(this);
+        loginRobot2.setOnClickListener(this);
+        saveRobotAdress.setOnClickListener(this);
+        removeRobotAdress.setOnClickListener(this);
+
     }
 
 
     @Override
     public void onClick(View view) {
 
-        // Si on clique sur le bouton de connexion 1
+        // Si on clique sur le bouton de connexion au serveur 1
         if(view == loginServer){
             // Si l'utilisateur a entrée une IP valide
             if(ipCorrect(serverAdress.getText().toString()) && server.getState() != 1)
@@ -107,7 +124,7 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
 
         }
 
-        // Si on Clique sur le bouton de connexion 2
+        // Si on Clique sur le bouton de connexion au serveur 2
         if(view == loginServer2)
         {
             //Si la liste n'est pas vide
@@ -152,18 +169,87 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         // Si clique sur le bouton de suppresion d'adresses
         if(view == removeServerAdress)
         {
-            if(FileOperator.removeLigne(DIRECTORY_NAME, SERVER_IP_FILE, listServerAdress.getSelectedItem().toString()))
-                initSpinner();
+            // Si la liste n'est pas vide
+            if(listServerAdress.getChildCount()!=0){
+                if(FileOperator.removeLigne(DIRECTORY_NAME, SERVER_IP_FILE, listServerAdress.getSelectedItem().toString()))
+                    initSpinner();
+            }else{
+                Toast.makeText(view.getContext(), R.string.ErrorEmptyList, Toast.LENGTH_SHORT).show();
+            }
         }
 
         // Si on clique sur le bouton de deconnexion
         if(view == connexionStatus)
         {
-           // thread_reception.stop();
+            // thread_reception.stop();
             server.stopConnexion();
             connexionStatus.setVisibility(View.GONE);
             connexionState.setText(R.string.Disconected);
             serverConfig.setVisibility(View.GONE);
+        }
+
+        // Si on clique sur le bouton de connexion au robot 1
+        if(view == loginRobot){
+            // Si l'utilisateur a entrée une IP valide
+            if(ipCorrect(robotAdress.getText().toString()))
+            {
+                Server.send(Constants.CONFIGURATION + Constants.ROBOT_IP + robotAdress.getText().toString());
+            }else{
+                Toast.makeText(view.getContext(), R.string.ErrorIPNotValid, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        // Si on Clique sur le bouton de connexion au robot 2
+        if(view == loginRobot2)
+        {
+            //Si la liste n'est pas vide
+            if(listRobotAdress.getChildCount() != 0)
+            {
+                Server.send(Constants.CONFIGURATION + Constants.ROBOT_IP + listRobotAdress.getSelectedItem().toString());
+            }else{
+                Toast.makeText(view.getContext(), R.string.ErrorNoItemSelected, Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        // Si on clique sur le bouton de sauvegarde de l'ip du robot
+        if(view == saveRobotAdress){
+            // Si l'adresse Ip est valide
+            if(ipCorrect(robotAdress.getText().toString()))
+            {
+                // Si l'IP n'est pas déjà sauvegardée
+                if(!FileOperator.fileContain(DIRECTORY_NAME,Constants.ROBOT_IP_FILE, robotAdress.getText().toString()))
+                {
+                    // On ajoute l'ip dans le mémoire du téléphone
+                    if(!FileOperator.writeFile(DIRECTORY_NAME, Constants.ROBOT_IP_FILE, robotAdress.getText().toString()))
+                        Toast.makeText(view.getContext(), R.string.ErrorFile , Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        Toast.makeText(view.getContext(), R.string.AdrressSavedSucces , Toast.LENGTH_SHORT).show();
+                        robotAdress.setText("");
+                    }
+
+                    // Ajout des IP sauvegardés dans le spinner
+                    initSpinner();
+                }else
+                    Toast.makeText(view.getContext(), R.string.ErrorIPExists, Toast.LENGTH_SHORT).show();
+
+            }else
+                Toast.makeText(view.getContext(), R.string.ErrorIPNotValid, Toast.LENGTH_SHORT).show();
+        }
+
+        // Si clique sur le bouton de suppresion d'adresses d'IP du robot
+        if(view == removeRobotAdress)
+        {
+            // Si la liste n'est pas vide
+            if(listRobotAdress.getChildCount()!=0){
+                //if(FileOperator.removeLigne(DIRECTORY_NAME, Constants.ROBOT_IP_FILE, listRobotAdress.getSelectedItem().toString()))
+                initSpinner();
+            }else{
+                Toast.makeText(view.getContext(), R.string.ErrorEmptyList, Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -189,13 +275,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             thread_reception = new Thread(new Reception(in));
             thread_reception.start();
 
-            // Demande d'informations au sur le robot au serveur
-            Server.send(Constants.GET + Constants.LANGAGES);
-            Server.send(Constants.GET + Constants.VOICES);
-            Server.send(Constants.GET + Constants.VOLUME);
-            Server.send(Constants.GET + Constants.POST_LIST);
-            Server.send(Constants.GET + Constants.BEHAVIOR);
-            Server.send(Constants.GET + Constants.NAO_NAME);
         }
         else
         {
@@ -206,10 +285,17 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
 
     }
 
+    // Ajout les IP sauvegardés du serveur et du robot dans les spinner
     public void initSpinner(){
+        // IP serveur
         String[] listIPSaved = FileOperator.getLignes(DIRECTORY_NAME, SERVER_IP_FILE);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, listIPSaved);
         listServerAdress.setAdapter(adapter);
+
+        // IP robot
+        String[] listRobotIPSaved = FileOperator.getLignes(DIRECTORY_NAME, Constants.ROBOT_IP_FILE);
+        ArrayAdapter<String> adapter_robot = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, listRobotIPSaved);
+        listRobotAdress.setAdapter(adapter_robot);
     }
 
     public boolean ipCorrect(String ip){

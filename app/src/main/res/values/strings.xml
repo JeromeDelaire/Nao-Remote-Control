@@ -19,6 +19,7 @@
     <string name="ServerConfiguration">Server configuration</string>
     <string name="ErrorIPNotValid">Please, enter a valid IP adress</string>
     <string name="ErrorNoItemSelected">The list does not contain any address</string>
+    <string name="ErrorEmptyList">Empty list !</string>
     <string name="AutoConnexion">Automatic Login</string>
     <string name="ErrorIPExists">This adress is already saved</string>
     <string name="AdrressSavedSucces">The address was saved</string>
