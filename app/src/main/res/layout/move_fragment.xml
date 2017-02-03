@@ -11,11 +11,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/ConnexionFragmentTitle"
-            style="@style/Title"
-            android:text="@string/Move" />
-
-        <TextView
             style="@style/SubTitle"
             android:text="@string/Posture"/>
 
@@ -25,13 +20,31 @@
             android:layout_height="wrap_content"
             android:theme="@android:style/Theme.Holo.Light"></Spinner>
 
-        <Button
-            android:id="@+id/TakePosture"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Element"
-            android:layout_margin="10dp"
-            android:text="@string/TakePosture"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/TakePosture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Element"
+                android:layout_margin="10dp"
+                android:text="@string/TakePosture"
+                android:layout_weight="0.5"/>
+
+            <Button
+                android:id="@+id/StopMotorsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Element"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
+                android:text="@string/StopMotors"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
 
         <include layout="@layout/divider"/>
 
@@ -62,14 +75,55 @@
             style="@style/SubTitle"
             android:text="@string/Walk"/>
 
-        <Button
-            android:id="@+id/WalkButton"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                style="@style/Element"
+                android:id="@+id/TowardButton"
+                android:layout_margin="5dp" />
+
+            <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
             style="@style/Element"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"
-            android:background="@drawable/accel_state"/>
+            android:id="@+id/StopButton"
+            android:layout_below="@id/TowardButton"
+            android:layout_margin="5dp" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                style="@style/Element"
+                android:id="@+id/LeftButton"
+                android:layout_margin="5dp"
+                android:layout_toLeftOf="@id/StopButton"
+                android:layout_below="@id/TowardButton" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                style="@style/Element"
+                android:id="@+id/RightButton"
+                android:layout_margin="5dp"
+                android:layout_below="@id/TowardButton"
+                android:layout_toRightOf="@id/StopButton" />
+
+            <Button
+                android:layout_width="50sp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                style="@style/Element"
+                android:id="@+id/BackwardButton"
+                android:layout_margin="5dp"
+                android:layout_below="@id/StopButton" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

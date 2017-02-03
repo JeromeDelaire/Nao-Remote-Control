@@ -1,77 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <TextView style="@style/Title"
-        android:text="@string/Status" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/nameEditText"
-            style="@style/NormalText"
-            android:text="@string/Name"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/BatteryIcon"
-            android:text="0%"
-            android:layout_centerVertical="true"
-            style="@style/NormalText"
-            android:id="@+id/BatteryLevelTextView"/>
-
-        <ImageView
-            android:id="@+id/BatteryIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/battery_unconnected"/>
-
-    </RelativeLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Element"
-        android:layout_margin="10dp"
-        android:text="@string/ChangeName"
-        android:textAllCaps="false"/>
-
-    <include layout="@layout/divider" />
-
-    <TextView style="@style/SubTitle"
-        android:text="@string/LEDConfig"/>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/StatusLayout">
 
-        <Button
-            android:id="@+id/LeftEyeButton"
-            style="@style/Element"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/LeftEye"
-            android:textAllCaps="false"/>
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/RightEyeButton"
-            style="@style/Element"
+            <TextView
+                android:id="@+id/nameEditText"
+                style="@style/NormalText"
+                android:text="@string/Name"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/BatteryIcon"
+                android:text="0%"
+                android:layout_centerVertical="true"
+                style="@style/NormalText"
+                android:id="@+id/BatteryLevelTextView"/>
+
+            <ImageView
+                android:id="@+id/BatteryIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/battery_unconnected"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="0.5"
-            android:text="@string/RightEye"
-            android:textAllCaps="false"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ChangeNameButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Element"
+                android:layout_margin="10dp"
+                android:text="@string/ChangeName"
+                android:textAllCaps="false"
+                android:layout_weight="0.5"/>
+
+            <Button
+                android:id="@+id/RebootButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Element"
+                android:layout_margin="10dp"
+                android:text="@string/Reboot"
+                android:layout_weight="0.5"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/AutonomousSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AutonomousLife"
+            android:layout_margin="10dp"/>
+
+        <include layout="@layout/divider" />
+
+        <TextView style="@style/SubTitle"
+            android:text="@string/LEDConfig"/>
+
+        <Spinner
+            android:id="@+id/LEDListSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/SetColorButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Element"
+                android:text="@string/SetColor"
+                android:layout_margin="10dp"
+                android:layout_weight="0.5"
+                android:textAllCaps="false"
+                />
+
+            <Button
+                android:id="@+id/ResetAllButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Element"
+                android:text="@string/Reset"
+                android:layout_weight="0.5"
+                android:layout_margin="10dp"
+                android:textAllCaps="false"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

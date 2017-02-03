@@ -21,7 +21,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="@string/RobotAdress"
-            android:textSize="18dp" />
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/RobotIPAdress"
@@ -41,7 +41,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/login" />
+            android:background="@drawable/login_state" />
 
         <Button
             android:id="@+id/SaveRobotAdressButton"
@@ -50,7 +50,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/LoginRobotButton"
-            android:background="@drawable/save"
+            android:background="@drawable/save_state"
             android:textAllCaps="false" />
 
     </RelativeLayout>
@@ -80,14 +80,14 @@
             android:id="@+id/RemoveRobotAdressButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trash" />
+            android:background="@drawable/trash_state" />
 
         <Button
             android:id="@+id/LoginRobotButton2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/login" />
+            android:background="@drawable/login_state" />
     </LinearLayout>
 
 </LinearLayout>

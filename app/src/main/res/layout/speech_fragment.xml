@@ -6,12 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/ConnexionFragmentTitle"
-            style="@style/Title"
-            android:text="@string/Speech" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,28 +16,29 @@
             <EditText
                 android:id="@+id/Speech"
                 style="@style/EditTextStyle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/TypeYourSpeech"
                 android:theme="@style/EditTextStyle"
                 android:inputType="textMultiLine"
                 android:layout_weight="1"
+                android:layout_margin="10dp"
                 />
 
             <Button
                 android:id="@+id/SaveSpeechButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/save"
+                android:layout_margin="10dp"
+                android:background="@drawable/save_state"
                 android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/SpeakButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/speak" />
+                android:layout_margin="10dp"
+                android:background="@drawable/speak_state" />
 
         </LinearLayout>
 
@@ -59,24 +55,25 @@
 
             <Spinner
                 android:id="@+id/SpinnerSpeech"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:theme="@android:style/Theme.Holo.Light"></Spinner>
+                android:theme="@android:style/Theme.Holo.Light"
+                />
 
             <Button
                 android:id="@+id/RemoveSpeech"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/trash" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/trash_state" />
 
             <Button
                 android:id="@+id/SpeakButton2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/speak" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/speak_state" />
         </LinearLayout>
 
         <include layout="@layout/divider"></include>
@@ -85,59 +82,98 @@
             style="@style/SubTitle"
             android:text="@string/Settings"/>
 
-        <TextView
-            style="@style/NormalText"
-            android:text="@string/Volume"
-            android:gravity="center"
-            />
-
-        <SeekBar
-            android:id="@+id/VolumeSeekBar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:thumbTint="@color/Primary"
-            android:progressBackgroundTint="@color/Secondary"
-            android:progressTint="@color/Primary"/>
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/NormalText"
-            android:text="@string/PitchShift"
-            android:gravity="center"
-            />
+            <TextView
+                style="@style/NormalText"
+                android:text="@string/Volume"
+                android:gravity="center_vertical"
+                android:layout_weight="0.7"
+                />
 
-        <SeekBar
-            android:id="@+id/PitchShiftSeekBar"
+            <SeekBar
+                android:id="@+id/VolumeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/Primary"
+                android:layout_gravity="center_vertical"
+                android:progressBackgroundTint="@color/Secondary"
+                android:progressTint="@color/Primary"
+                android:layout_weight="0.3"
+                />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:thumbTint="@color/Primary"
-            android:progressBackgroundTint="@color/Secondary"
-            android:progressTint="@color/Primary"
-            android:max="31"/>
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/NormalText"
-            android:text="@string/Voice"
-            android:gravity="center"
-            />
+            <TextView
+                style="@style/NormalText"
+                android:text="@string/Frequency"
+                android:gravity="center_vertical"
+                android:layout_weight="0.7"
+                />
 
-        <Spinner
-            android:id="@+id/VoiceSpinner"
+            <SeekBar
+                android:id="@+id/PitchShiftSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/Primary"
+                android:progressBackgroundTint="@color/Secondary"
+                android:progressTint="@color/Primary"
+                android:max="31"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/NormalText"
-            android:text="@string/Langage"
-            android:gravity="center"
-            />
+            <TextView
+                style="@style/NormalText"
+                android:text="@string/Voice"
+                android:gravity="center_vertical"
+                android:layout_weight="0.7"
+                />
 
+            <Spinner
+                android:id="@+id/VoiceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@android:style/Theme.Holo.Light"
+                android:layout_weight="0.3"
+                android:layout_gravity="center_vertical"/>
 
-        <Spinner
-            android:id="@+id/LangageSpinner"
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@android:style/Theme.Holo.Light"></Spinner>
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/NormalText"
+                android:text="@string/Langage"
+                android:gravity="center_vertical"
+                android:layout_weight="0.7"
+                />
+
+
+            <Spinner
+                android:id="@+id/LangageSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@android:style/Theme.Holo.Light"
+                android:layout_weight="0.3"/>
+
+        </LinearLayout>
 
         <CheckBox
             android:id="@+id/AnimatedSpeech"

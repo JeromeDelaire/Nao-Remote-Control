@@ -32,14 +32,17 @@ public interface Constants{
     String SETTING = "SET/" ;
         String VOLUME = "VOL/" ;
         String LED = "LED/" ;
-            String RIGHT_EYE = "REC/" ;
-            String LEFT_EYE = "LEC/" ;
-            String ALL_LEDS = "ALL/" ;
+            String RESET = "RST/" ;
         String LANGAGE = "LAN/";
         //Réglage de la fréquence de lavoix
         String PITCH_SHIFTING = "PTS/" ;
         // Choix de la voix
         String SPEAKING_VOICE = "SPV/" ;
+        String NAME = "NAM/" ;
+        String AUTONOMOUS = "AUT/" ;
+            String DISABLED = "disabled" ;
+            String SOLITARY = "solitary" ;
+
 
     // Demande d'informations
     String GET = "GET/";
@@ -50,12 +53,15 @@ public interface Constants{
         //String BEHAVIOUR
         String NAO_NAME = "NAO/" ;
         String BATTERY = "BAT/" ;
+        String LED_LIST = "LED/" ;
+        String RAW_DATA = "RAW/" ;
 
     //Réglage de comportement
     String BEHAVIOR = "BHV/" ;
 
     // Faire bouger le robot
     String MOVE = "MOV/";
+        String RELAX = "REL/";
 
     // Faire marcher le robot
     String WALK = "WLK/" ;
@@ -65,4 +71,6 @@ public interface Constants{
         String BACKWARD = "WBW/";
     String STOP_WALK = "STW/";
 
+    //Reboot le rebot
+    String REBOOT = "REB/" ;
 }

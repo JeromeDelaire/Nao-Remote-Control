@@ -1,16 +1,12 @@
 package com.example.jerome.naoremotecontrol.CORE.NETWORK;
 
-import android.os.AsyncTask;
-import android.view.View;
-
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Battery;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.CONFIGURATION;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
@@ -20,21 +16,24 @@ import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.STOP
  * Created by Jerome on 01/11/2016.
  */
 
-public class Server extends AsyncTask<Void, Void, Void> {
+public class Server implements Runnable {
 
     private static String dstAddress;
     private static int dstPort;
     private static Socket socket = null;
     private static PrintWriter out;
     private static int state ;
+    private static ChangeListener listener;
+    private static boolean connect;
 
-    public Server(String addr, int port, View v) {
+    public Server(String addr, int port) {
         dstAddress = addr;
         dstPort = port;
         state = 0 ;
+        connect=false;
     }
 
-    public Socket getSocket() {
+    public static Socket getSocket() {
         return socket;
     }
 
@@ -46,22 +45,8 @@ public class Server extends AsyncTask<Void, Void, Void> {
         this.state = state;
     }
 
-    @Override
-
-    protected Void doInBackground(Void... voids) {
-
-        try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(dstAddress, dstPort), 2000);
-            out = new PrintWriter(socket.getOutputStream());
-            if(socket.isBound() && socket.isConnected())
-            state = 1 ;
-
-        } catch (IOException e) {
-            state = -1 ;
-            e.printStackTrace();
-        }
-        return null;
+    public static boolean isConnect() {
+        return connect;
     }
 
     public void stopConnexion() {
@@ -70,6 +55,8 @@ public class Server extends AsyncTask<Void, Void, Void> {
             out.flush();
             socket.close();
             state = 0 ;
+            connect=false;
+            if (listener != null) listener.onChange();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,8 +64,56 @@ public class Server extends AsyncTask<Void, Void, Void> {
 
     public static void send(String message){
         message = message.replaceAll("[\r\n]+", " ");
-        FileOperator.writeFile(DIRECTORY_NAME, "test.txt", message);
         out.println(message);
         out.flush();
+    }
+
+    @Override
+    public void run() {
+        try {
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(dstAddress, dstPort), 100);
+            out = new PrintWriter(socket.getOutputStream());
+            if(socket.isBound() && socket.isConnected()){
+                state = 1 ;
+                connect=true;
+                if (listener != null) listener.onChange();
+            }
+
+
+        } catch (IOException e) {
+            state = -1 ;
+            if (listener != null) listener.onChange();
+            e.printStackTrace();
+        }
+    }
+
+    public ChangeListener getListener() {
+        return listener;
+    }
+
+    public static String getDstAddress() {
+        return dstAddress;
+    }
+
+    public static void setDstAddress(String dstAddress) {
+        Server.dstAddress = dstAddress;
+    }
+
+    public static int getDstPort() {
+        return dstPort;
+    }
+
+    public static void setDstPort(int dstPort) {
+        Server.dstPort = dstPort;
+    }
+
+    public void setListener(ChangeListener listener) {
+        this.listener = listener;
+
+    }
+
+    public interface ChangeListener {
+        void onChange();
     }
 }

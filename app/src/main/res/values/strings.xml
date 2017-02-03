@@ -37,8 +37,6 @@
     <string name="Name">Name : </string>
     <string name="ChangeName">Change name</string>
     <string name="SpeechSaveSucces">Speech saved !</string>
-    <string name="LeftEye">Left eye</string>
-    <string name="RightEye">Right eye</string>
     <string name="LEDConfig">LED configuration</string>
     <string name="AnimatedSpeech">Animated speech</string>
     <string name="Move">Move</string>
@@ -46,11 +44,27 @@
     <string name="Posture">Posture</string>
     <string name="TakePosture">Take posture</string>
     <string name="Walk">Walk</string>
-    <string name="PitchShift">Voice pitch shift</string>
+    <string name="Frequency">Frequency</string>
     <string name="SecondVoice">Second voice frequency</string>
     <string name="SecondVoiceLevel">Second voice level</string>
     <string name="SecondVoiceTimeShift">Second voice time shift</string>
     <string name="Voice">Voice</string>
     <string name="Behavior">Behavior</string>
     <string name="SetBehavior">Set behavior</string>
+    <string name="StopMotors">Relax (stop motors)</string>
+    <string name="TypeNaoName"> Type name here</string>
+    <string name="OK">OK</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Reboot">Reboot</string>
+    <string name="AllLEDs">All LEDs</string>
+    <string name="Reset">Reset all</string>
+    <string name="Eyes">Eyes</string>
+    <string name="Feet">Feet</string>
+    <string name="Ears">Ears</string>
+    <string name="Chest">Chest</string>
+    <string name="Left">Left</string>
+    <string name="Right">Right</string>
+    <string name="Others">Others</string>
+    <string name="SetColor">Set color</string>
+    <string name="AutonomousLife">Auonomous life  </string>
 </resources>

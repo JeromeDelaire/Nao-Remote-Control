@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
     @Override
     public void setMenuVisibility(final boolean visible) {
         super.setMenuVisibility(visible);
+        if(Server.isConnect())Server.send(Constants.GET + Constants.VOLUME);
         if (visible) {
             if(availableLangages!=null){
                 ArrayAdapter<String> langagesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availableLangages);
@@ -90,7 +93,7 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
         volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if(Server.getState()==1)Server.send(Constants.SETTING + Constants.VOLUME + String.valueOf(volumeBar.getProgress()));
+                if(Server.isConnect())Server.send(Constants.SETTING + Constants.VOLUME + String.valueOf(volumeBar.getProgress()));
             }
 
             @Override

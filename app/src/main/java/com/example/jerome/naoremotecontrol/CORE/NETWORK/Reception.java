@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class Reception implements Runnable{
 
     private BufferedReader in ;
-    private String data ;
 
     public Reception(BufferedReader in)
     {
@@ -28,12 +27,12 @@ public class Reception implements Runnable{
     @Override
     public void run() {
 
-        while (true){
+        while(true){
 
             // Si on est connecté au serveur
             if(Server.getState() == 1){
                 try {
-                    data = in.readLine();
+                    String data = in.readLine();
 
                     // Si on a recu des données
                     if(data != null){
@@ -50,22 +49,22 @@ public class Reception implements Runnable{
                             // Si on reçoit la liste des postures disponibles
                             case Constants.POST_LIST :
 
-                               ArrayList<String> postures = new ArrayList<String>();
+                               ArrayList<String> postures = new ArrayList<>();
 
                                 data = data.replaceAll(Constants.POST_LIST, "");
-                                data = data.substring(1,data.length()-1);
+                                data = data.substring(1, data.length()-1);
                                 data = data.replaceAll(", ", "/");
                                 data = data + "/" ;
 
                                 int numberPost = 0 ;
 
-                                for(int i=0 ; i<data.length(); i++){
+                                for(int i = 0; i< data.length(); i++){
                                     if(data.charAt(i)=='/')numberPost++;
                                 }
 
                                 for(int i=0 ; i<numberPost ; i++){
                                     postures.add(data.substring(0, data.indexOf('/'))) ;
-                                    data = data.replaceAll(postures.get(i).toString(), "");
+                                    data = data.replaceAll(postures.get(i), "");
                                     data = data.replaceFirst("/", "");
                                 }
 
@@ -75,22 +74,22 @@ public class Reception implements Runnable{
                             // Si on recoit la liste des langages disponibles
                             case Constants.LANGAGE :
 
-                                ArrayList<String> langages = new ArrayList<String>();
+                                ArrayList<String> langages = new ArrayList<>();
 
                                 data = data.replaceAll(Constants.LANGAGE, "");
-                                data = data.substring(1,data.length()-1);
+                                data = data.substring(1, data.length()-1);
                                 data = data.replaceAll(", ", "/");
                                 data = data + "/" ;
 
                                 int numberLangages = 0 ;
 
-                                for(int i=0 ; i<data.length(); i++){
+                                for(int i = 0; i< data.length(); i++){
                                     if(data.charAt(i)=='/')numberLangages++;
                                 }
 
                                 for(int i=0 ; i<numberLangages ; i++){
                                     langages.add(data.substring(0, data.indexOf('/'))) ;
-                                    data = data.replaceAll(langages.get(i).toString(), "");
+                                    data = data.replaceAll(langages.get(i), "");
                                     data = data.replaceFirst("/", "");
                                 }
 
@@ -101,22 +100,22 @@ public class Reception implements Runnable{
                             // Si on recoit la liste des voies disponibles
                             case Constants.VOICES :
 
-                                ArrayList<String> voices = new ArrayList<String>();
+                                ArrayList<String> voices = new ArrayList<>();
 
                                 data = data.replaceAll(Constants.VOICES, "");
-                                data = data.substring(1,data.length()-1);
+                                data = data.substring(1, data.length()-1);
                                 data = data.replaceAll(", ", "/");
                                 data = data + "/" ;
 
                                 int numberLVoices = 0 ;
 
-                                for(int i=0 ; i<data.length(); i++){
+                                for(int i = 0; i< data.length(); i++){
                                     if(data.charAt(i)=='/')numberLVoices++;
                                 }
 
                                 for(int i=0 ; i<numberLVoices ; i++){
                                     voices.add(data.substring(0, data.indexOf('/'))) ;
-                                    data = data.replaceAll(voices.get(i).toString(), "");
+                                    data = data.replaceAll(voices.get(i), "");
                                     data = data.replaceFirst("/", "");
                                 }
 
@@ -127,22 +126,22 @@ public class Reception implements Runnable{
                             // Si on recoit la liste des comportements disponibles
                             case Constants.BEHAVIOR :
 
-                                ArrayList<String> behavior = new ArrayList<String>();
+                                ArrayList<String> behavior = new ArrayList<>();
 
                                 data = data.replaceAll(Constants.BEHAVIOR, "");
-                                data = data.substring(1,data.length()-1);
+                                data = data.substring(1, data.length()-1);
                                 data = data.replaceAll(", ", "#");
                                 data = data + "#" ;
 
                                 int numberBehavior = 0 ;
 
-                                for(int i=0 ; i<data.length(); i++){
+                                for(int i = 0; i< data.length(); i++){
                                     if(data.charAt(i)=='#')numberBehavior++;
                                 }
 
                                 for(int i=0 ; i<numberBehavior ; i++){
                                     behavior.add(data.substring(0, data.indexOf('#'))) ;
-                                    data = data.replaceFirst(behavior.get(i).toString(), "");
+                                    data = data.replaceFirst(behavior.get(i), "");
                                     data = data.replaceFirst("#", "");
                                 }
 
@@ -162,6 +161,7 @@ public class Reception implements Runnable{
                                 Battery.setBattery(data);
                                 break;
 
+                            // Si le serveur viens de se connecter au robot
                             case Constants.ROBOT_CONNECTED :
                                 // Demande d'informations sur le robot au serveur
                                 Server.send(Constants.GET + Constants.LANGAGES);
@@ -171,7 +171,46 @@ public class Reception implements Runnable{
                                 Server.send(Constants.GET + Constants.BEHAVIOR);
                                 Server.send(Constants.GET + Constants.NAO_NAME);
                                 Server.send(Constants.GET + Constants.BATTERY);
+                                Server.send(Constants.GET + Constants.LED_LIST);
                                 break;
+
+                            case Constants.LED_LIST :
+
+                                ArrayList<String> leds = new ArrayList<>();
+
+                                data = data.replaceAll(Constants.LED_LIST, "");
+                                data = data.substring(1, data.length()-1);
+                                data = data.replaceAll(", ", "/");
+                                data = data + "/" ;
+
+                                int numberLeds = 0 ;
+
+                                for(int i = 0; i< data.length(); i++){
+                                    if(data.charAt(i)=='/')numberLeds++;
+                                }
+
+                                for(int i=0 ; i<numberLeds ; i++){
+                                    leds.add(data.substring(0, data.indexOf('/'))) ;
+                                    data = data.replaceFirst(leds.get(i), "");
+                                    data = data.replaceFirst("/", "");
+                                }
+
+                                StatusFragment.setAvailableLedGroups(leds);
+
+                                break ;
+
+                          /*  case Constants.RAW_DATA :
+                                data = data.replaceAll(Constants.RAW_DATA, "");
+
+                                int len = data.length();
+                                byte[] raw = new byte[len / 2];
+                                for (int i = 0; i < len; i += 2) {
+                                    raw[i / 2] = (byte) ((Character.digit(data.charAt(i), 16) << 4)
+                                            + Character.digit(data.charAt(i+1), 16));
+                                }
+
+                                MoveFragment.testImage = raw ;
+                                break ;*/
                         }
 
                     }
