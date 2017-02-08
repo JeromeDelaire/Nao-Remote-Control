@@ -73,4 +73,6 @@ public interface Constants{
 
     //Reboot le rebot
     String REBOOT = "REB/" ;
+    // Eteint le robot
+    String SHUTDOWN = "SHU/";
 }

@@ -12,4 +12,5 @@
     <color name="Text">#000000</color>
     <color name="Red">#b91111</color>
     <color name="LightBlue">#b8c8ff</color>
+    <color name="NotificationBar">#1d7dc7</color>
 </resources>

@@ -17,6 +17,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Behavior;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Langage;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Voice;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
@@ -25,9 +29,11 @@ import com.example.jerome.naoremotecontrol.R;
 import java.util.ArrayList;
 
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
+import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.LANGAGE;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.NO_ANIMATION;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SAY;
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SPEECH_FILE;
+import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.VOICES;
 
 /**
  * Created by Jerome on 01/11/2016.
@@ -35,7 +41,6 @@ import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.SPEE
 
 public class SpeechFragment extends Fragment implements View.OnClickListener{
 
-    private static ArrayList<String> availableVoices = null, availableLangages = null;
     private EditText speech ;
     private Button saveSpeech, saySpeech, saySavedSpeech, deleteSpeech, removeSpeech ;
     private Server server ;
@@ -49,22 +54,12 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void setMenuVisibility(final boolean visible) {
-        super.setMenuVisibility(visible);
-        if(Server.isConnect())Server.send(Constants.GET + Constants.VOLUME);
-        if (visible) {
-            if(availableLangages!=null){
-                ArrayAdapter<String> langagesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availableLangages);
-                langages.setAdapter(langagesAdapter);
-            }
-            if(availableVoices != null){
-                ArrayAdapter<String> voicesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availableVoices);
-                voicesList.setAdapter(voicesAdapter);
-            }
-            if(Volume.getVolume()!=-1) {
-                volumeBar.setProgress(Volume.getVolume());
-            }
-        }
+    public void onResume(){
+        super.onResume();
+        voicesList.setAdapter(Voice.getVoiceList());
+        langages.setAdapter(Langage.getLangageList());
+        langages.setAdapter(Langage.getLangageList());
+        volumeBar.setProgress(Volume.getVolume());
     }
 
     @Override
@@ -105,11 +100,56 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        // Si on recoit la liste des voix disponibles
+        Voice voiceListen = new Voice();
+        voiceListen.setListener(new Voice.ChangeListener() {
+            @Override
+            public void onChange() {
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            voicesList.setAdapter(Voice.getVoiceList());
+                        }
+                    });
+                }catch (NullPointerException e){
+
+                }
+            }
+        });
+
+        // Si on recoit la liste des langues disponibles
+        Langage langageListen = new Langage();
+        langageListen.setListener(new Langage.ChangeListener() {
+            @Override
+            public void onChange() {
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            langages.setAdapter(Langage.getLangageList());
+                        }
+                    });
+                }catch (NullPointerException e){
+
+                }
+            }
+        });
+
         Volume vol = new Volume();
         vol.setListener(new Volume.ChangeListener() {
             @Override
             public void onChange() {
-                volumeBar.setProgress(Volume.getVolume());
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            volumeBar.setProgress(Volume.getVolume());
+                        }
+                    });
+                }catch (NullPointerException e){
+
+                }
             }
         });
 
@@ -200,11 +240,4 @@ public class SpeechFragment extends Fragment implements View.OnClickListener{
         speechesList.setAdapter(adapter);
     }
 
-    public static void setAvailableVoices(ArrayList<String> voices){
-        availableVoices = voices ;
-    }
-
-    public static void setAvailableLangages(ArrayList<String> langages){
-        availableLangages = langages ;
-    }
 }

@@ -51,66 +51,83 @@
                 android:layout_margin="10dp"
                 android:text="@string/ChangeName"
                 android:textAllCaps="false"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.5"
+                android:layout_gravity="center"/>
 
-            <Button
-                android:id="@+id/RebootButton"
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/Secondary"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Element"
-                android:layout_margin="10dp"
-                android:text="@string/Reboot"
-                android:layout_weight="0.5"
-                android:textAllCaps="false"/>
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AutonomousLife"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/NormalText"/>
+
+                <Switch
+                    android:id="@+id/AutonomousSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_horizontal"
+
+                    />
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
-        <Switch
-            android:id="@+id/AutonomousSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/AutonomousLife"
-            android:layout_margin="10dp"/>
+
 
         <include layout="@layout/divider" />
 
         <TextView style="@style/SubTitle"
             android:text="@string/LEDConfig"/>
 
-        <Spinner
-            android:id="@+id/LEDListSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@android:style/Theme.Holo.Light"></Spinner>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/SetColorButton"
+            <Spinner
+                android:id="@+id/LEDListSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Element"
-                android:text="@string/SetColor"
+                android:theme="@android:style/Theme.Holo.Light"
                 android:layout_margin="10dp"
-                android:layout_weight="0.5"
-                android:textAllCaps="false"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/SetColorButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/light_state"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 />
 
             <Button
                 android:id="@+id/ResetAllButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Element"
-                android:text="@string/Reset"
-                android:layout_weight="0.5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/reset_state"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:textAllCaps="false"
                 />
 
+
         </LinearLayout>
+
 
     </LinearLayout>
 

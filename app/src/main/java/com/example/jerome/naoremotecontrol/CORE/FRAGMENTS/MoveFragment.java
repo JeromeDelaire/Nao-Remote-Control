@@ -1,5 +1,6 @@
 package com.example.jerome.naoremotecontrol.CORE.FRAGMENTS;
 
+import android.app.backup.BackupHelper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Path;
@@ -22,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Behavior;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.R;
 
@@ -37,8 +40,6 @@ public class MoveFragment extends Fragment implements OnClickListener {
     private Spinner posturesList, behaviorList ;
     private Button takePosture, setBehavior, forward, backward, left, right, stop, relax;
     private String[] listPos ;
-    private static ArrayList<String> availableBehavior = null, availablePostures = null;
-    public static byte[] testImage  ;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,20 +47,10 @@ public class MoveFragment extends Fragment implements OnClickListener {
     }
 
     @Override
-    public void setMenuVisibility(final boolean visible) {
-        super.setMenuVisibility(visible);
-        if (visible) {
-            // Spinner comportements
-            if(availableBehavior!=null){
-                ArrayAdapter<String> behaviorAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availableBehavior);
-                behaviorList.setAdapter(behaviorAdapter);
-            }
-            //Spinner postures
-            if(availablePostures!=null){
-                ArrayAdapter<String> posturesAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, availablePostures);
-                posturesList.setAdapter(posturesAdapter);
-            }
-        }
+    public void onResume(){
+        super.onResume();
+        behaviorList.setAdapter(Behavior.getBehaviorList());
+        posturesList.setAdapter(Posture.getPosturesList());
     }
 
     @Override
@@ -105,15 +96,42 @@ public class MoveFragment extends Fragment implements OnClickListener {
             }
         });
 
+        // Si on a recu la liste des postures disponibles
+        Posture posturesListen = new Posture();
+        posturesListen.setListener(new Posture.ChangeListener() {
+            @Override
+            public void onChange() {
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            posturesList.setAdapter(Posture.getPosturesList());
+                        }
+                    });
+                }catch (NullPointerException e){
 
-    }
+                }
+            }
+        });
 
-    public static void setAvailableBehavior(ArrayList<String> behavior){
-        availableBehavior = behavior ;
-    }
+        // Si on a recu la liste des comportements disponibles
+        Behavior behaviorListen = new Behavior();
+        behaviorListen.setListener(new Behavior.ChangeListener() {
+            @Override
+            public void onChange() {
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            behaviorList.setAdapter(Behavior.getBehaviorList());
+                        }
+                    });
+                }catch (NullPointerException e){
 
-    public static void setAvailablePostures(ArrayList<String> postures){
-        availablePostures = postures ;
+                }
+            }
+        });
+
     }
 
     @Override

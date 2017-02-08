@@ -45,17 +45,17 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
     private Button loginServer, loginServer2, loginRobot, loginRobot2, saveServerAdress, saveRobotAdress,
             removeServerAdress, removeRobotAdress, connexionStatus,  autmaticServerLogin;
     private Spinner listServerAdress, listRobotAdress ;
-    private Server server ;
+    private static Server server ;
     private TextView connexionState ;
     private View serverConfig ;
     private BufferedReader in ;
     private boolean majConnexion=false;
     private ProgressBar waitConnexion ;
+    private View connexionView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(Server.getState()==0)server = new Server("0.0.0.0", PORT);
         return inflater.inflate(R.layout.connexion_fragment, container, false);
 
     }
@@ -74,6 +74,7 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
+        if(Server.getState()==0)server = new Server("0.0.0.0", PORT);
 
         // Widgets de connexion au serveur
         serverAdress = (EditText) view.findViewById(R.id.IPAdressServer);
@@ -117,31 +118,35 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             public void onChange() {
                 //       if(Server.getState()==1){
                 majConnexion = true ;
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(Server.isConnect()){
-                            connexionStatus.setVisibility(View.VISIBLE);
-                            connexionState.setText(R.string.Connected);
-                            serverConfig.setVisibility(View.VISIBLE);
-                            waitConnexion.setVisibility(View.GONE);
-                            autmaticServerLogin.setVisibility(View.VISIBLE);
+                if(getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Server.isConnect()) {
+                                connexionStatus.setVisibility(View.VISIBLE);
+                                connexionState.setText(R.string.Connected);
+                                serverConfig.setVisibility(View.VISIBLE);
+                                waitConnexion.setVisibility(View.GONE);
+                                autmaticServerLogin.setVisibility(View.VISIBLE);
 
-                            try {
-                                in = new BufferedReader(new InputStreamReader(server.getSocket().getInputStream()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                try {
+                                    in = new BufferedReader(new InputStreamReader(Server.getSocket().getInputStream()));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Thread thread_reception = new Thread(new Reception(getActivity(), in));
+                                thread_reception.start();
+                            } else {
+                                connexionStatus.setVisibility(View.GONE);
+                                connexionState.setText(R.string.Disconected);
+                                serverConfig.setVisibility(View.GONE);
+                                if(connexionView == loginServer || connexionView == loginServer2)
+                                    Toast.makeText(getContext(), R.string.ErrorConnectServer, Toast.LENGTH_SHORT).show();
                             }
-
-                            Thread thread_reception = new Thread(new Reception(in));
-                            thread_reception.start();
-                        }else{
-                            connexionStatus.setVisibility(View.GONE);
-                            connexionState.setText(R.string.Disconected);
-                            serverConfig.setVisibility(View.GONE);
                         }
-                    }
-                });
+                    });
+                }
 
             }
         });
@@ -151,6 +156,8 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+
+        connexionView = view ;
 
         // Si on clique sur le bouton de connexion automatique au serveur
         if(view == autmaticServerLogin){
@@ -176,10 +183,21 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+
                             int ip = 1;
                             while (!Server.isConnect() && ip < 255) {
                                 serverConnexion(ip1 + "." + ip2 + "." + ip3 + "." + ip, autmaticServerLogin);
                                 ip++;
+                            }
+                            if (ip >= 255){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        waitConnexion.setVisibility(View.GONE);
+                                        autmaticServerLogin.setVisibility(View.VISIBLE);
+                                        Toast.makeText(getContext(), R.string.ErrorConnectServer, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                     }).start();
@@ -340,7 +358,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         new Thread(server).start();
         while (!majConnexion);
         majConnexion=false;
-
     }
 
     // Ajout les IP sauvegardés du serveur et du robot dans les spinner

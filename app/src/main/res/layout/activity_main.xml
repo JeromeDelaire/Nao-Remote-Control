@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -13,16 +22,38 @@
         android:background="@color/Primary"
         android:elevation="6dp"
         app:tabTextAppearance="@style/TabText"
+        android:layout_below="@id/toolbar"
         style="@style/BarTheme"
         android:theme="@style/BarTheme"/>
 
     <android.support.v4.view.ViewPager
+        android:layout_below="@id/tab_layout"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/ViewPager">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ViewPager"
+        android:paddingBottom="50dp">
 
     </android.support.v4.view.ViewPager>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/Primary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/wifi_connected"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/wifi_disconnected"/>
+    </LinearLayout>
+
+</RelativeLayout>
 
 

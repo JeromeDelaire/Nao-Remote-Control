@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:actionbarcompat_mse="http://schemas.android.com/apk/res-auto" >
+    <item
+        android:id="@+id/shutdown"
+        android:orderInCategory="0"
+        actionbarcompat_mse:showAsAction="never"
+        android:title="@string/ShutdownNao">
+    </item>
+
+    <item
+        android:id="@+id/reboot"
+        android:orderInCategory="0"
+        actionbarcompat_mse:showAsAction="never"
+        android:title="@string/RebootNao" />
+
+    <item
+        android:id="@+id/help"
+        android:orderInCategory="100"
+        actionbarcompat_mse:showAsAction="never"
+        android:title="@string/Help">
+    </item>
+</menu>

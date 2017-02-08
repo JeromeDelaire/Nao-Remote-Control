@@ -67,4 +67,8 @@
     <string name="Others">Others</string>
     <string name="SetColor">Set color</string>
     <string name="AutonomousLife">Auonomous life  </string>
+    <string name="ShutdownNao">Shutdown NAO</string>
+    <string name="RebootNao">Reboot NAO</string>
+    <string name="Help">Help</string>
+
 </resources>

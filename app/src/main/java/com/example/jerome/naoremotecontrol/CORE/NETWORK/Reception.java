@@ -1,11 +1,22 @@
 package com.example.jerome.naoremotecontrol.CORE.NETWORK;
 
+import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.MoveFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.StatusFragment;
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Battery;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Behavior;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Langage;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Leds;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Name;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Voice;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
+import com.example.jerome.naoremotecontrol.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,9 +29,11 @@ import java.util.ArrayList;
 public class Reception implements Runnable{
 
     private BufferedReader in ;
+    private Activity activity ;
 
-    public Reception(BufferedReader in)
+    public Reception(Activity activity, BufferedReader in)
     {
+        this.activity = activity ;
         this.in = in ;
     }
 
@@ -68,7 +81,9 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst("/", "");
                                 }
 
-                                MoveFragment.setAvailablePostures(postures);
+                                ArrayAdapter<String> posturesAdapter = new ArrayAdapter<>(activity, R.layout.spinner_item, postures);
+                                Posture.setPosturesList(posturesAdapter);
+
                                 break;
 
                             // Si on recoit la liste des langages disponibles
@@ -93,7 +108,8 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst("/", "");
                                 }
 
-                                SpeechFragment.setAvailableLangages(langages);
+                                ArrayAdapter langageAdapter = new ArrayAdapter(activity, R.layout.spinner_item, langages);
+                                Langage.setLangageList(langageAdapter);
 
                                 break;
 
@@ -119,8 +135,8 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst("/", "");
                                 }
 
-                                SpeechFragment.setAvailableVoices(voices);
-
+                                ArrayAdapter<String> voiceAdpater = new ArrayAdapter<String>(activity, R.layout.spinner_item, voices);
+                                Voice.setVoiceList(voiceAdpater);
                                 break;
 
                             // Si on recoit la liste des comportements disponibles
@@ -145,14 +161,15 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst("#", "");
                                 }
 
-                                MoveFragment.setAvailableBehavior(behavior);
+                                ArrayAdapter<String> behaviorAdapter = new ArrayAdapter<>(activity, R.layout.spinner_item, behavior);
+                                Behavior.setBehaviorList(behaviorAdapter);
 
                                 break;
 
                             // Si on reçoit le nom du robot
                             case Constants.NAO_NAME :
                                 data = data.replaceAll(Constants.NAO_NAME, "");
-                                StatusFragment.setName(data);
+                                Name.setName(data);
                                 break;
 
                             // Si on reçoit le niveau de batterie
@@ -174,6 +191,7 @@ public class Reception implements Runnable{
                                 Server.send(Constants.GET + Constants.LED_LIST);
                                 break;
 
+                            // Si on reçoit la liste des groupes de leds
                             case Constants.LED_LIST :
 
                                 ArrayList<String> leds = new ArrayList<>();
@@ -194,8 +212,9 @@ public class Reception implements Runnable{
                                     data = data.replaceFirst(leds.get(i), "");
                                     data = data.replaceFirst("/", "");
                                 }
-
-                                StatusFragment.setAvailableLedGroups(leds);
+                                //.setAvailableLedGroups(leds);
+                                ArrayAdapter<String> ledsAdapter = new ArrayAdapter<>(activity, R.layout.spinner_item, leds);
+                                Leds.setLedList(ledsAdapter);
 
                                 break ;
 

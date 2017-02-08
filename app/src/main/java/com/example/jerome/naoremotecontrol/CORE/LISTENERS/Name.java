@@ -1,19 +1,19 @@
 package com.example.jerome.naoremotecontrol.CORE.LISTENERS;
 
 /**
- * Created by jerome on 12/11/16.
+ * Created by jerome on 04/02/17.
  */
 
-public class Volume {
-    private static int volume = 0;
+public class Name {
+    private static String name = "";
     private static ChangeListener listener;
 
-    public static int getVolume() {
-        return volume;
+    public static String getName() {
+        return name;
     }
 
-    public static void setVolume(int vol) {
-        volume = vol ;
+    public static void setName(String naoName) {
+        name = naoName ;
         if (listener != null) listener.onChange();
     }
 

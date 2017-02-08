@@ -59,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:theme="@android:style/Theme.Holo.Light"
+                android:layout_margin="10dp"
                 />
 
             <Button
@@ -141,6 +142,7 @@
                 android:text="@string/Voice"
                 android:gravity="center_vertical"
                 android:layout_weight="0.7"
+                android:layout_gravity="center"
                 />
 
             <Spinner
@@ -149,7 +151,8 @@
                 android:layout_height="wrap_content"
                 android:theme="@android:style/Theme.Holo.Light"
                 android:layout_weight="0.3"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="top"
+                android:layout_margin="10dp"/>
 
         </LinearLayout>
 
@@ -161,7 +164,7 @@
             <TextView
                 style="@style/NormalText"
                 android:text="@string/Langage"
-                android:gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_weight="0.7"
                 />
 
@@ -171,7 +174,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@android:style/Theme.Holo.Light"
-                android:layout_weight="0.3"/>
+                android:layout_weight="0.3"
+                android:layout_margin="10dp"
+                android:layout_gravity="top"/>
 
         </LinearLayout>
 

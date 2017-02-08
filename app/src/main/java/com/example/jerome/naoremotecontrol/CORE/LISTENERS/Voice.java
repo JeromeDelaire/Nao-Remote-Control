@@ -1,19 +1,21 @@
 package com.example.jerome.naoremotecontrol.CORE.LISTENERS;
 
+import android.widget.ArrayAdapter;
+
 /**
- * Created by jerome on 12/11/16.
+ * Created by jerome on 08/02/17.
  */
 
-public class Volume {
-    private static int volume = 0;
+public class Voice {
+    private static ArrayAdapter<String> voiceList;
     private static ChangeListener listener;
 
-    public static int getVolume() {
-        return volume;
+    public static ArrayAdapter<String> getVoiceList(){
+        return voiceList ;
     }
 
-    public static void setVolume(int vol) {
-        volume = vol ;
+    public static void setVoiceList(ArrayAdapter<String> list) {
+        voiceList = list ;
         if (listener != null) listener.onChange();
     }
 
