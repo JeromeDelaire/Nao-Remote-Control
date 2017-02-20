@@ -3,6 +3,7 @@ package com.example.jerome.naoremotecontrol.CORE.NETWORK;
 import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.MoveFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
@@ -16,10 +17,12 @@ import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Name;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Voice;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
+import com.example.jerome.naoremotecontrol.MainActivity;
 import com.example.jerome.naoremotecontrol.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +33,7 @@ public class Reception implements Runnable{
 
     private BufferedReader in ;
     private Activity activity ;
+    public static int [] pixels = new int[128*128];
 
     public Reception(Activity activity, BufferedReader in)
     {
@@ -62,7 +66,7 @@ public class Reception implements Runnable{
                             // Si on reçoit la liste des postures disponibles
                             case Constants.POST_LIST :
 
-                               ArrayList<String> postures = new ArrayList<>();
+                                ArrayList<String> postures = new ArrayList<>();
 
                                 data = data.replaceAll(Constants.POST_LIST, "");
                                 data = data.substring(1, data.length()-1);
@@ -218,18 +222,24 @@ public class Reception implements Runnable{
 
                                 break ;
 
-                          /*  case Constants.RAW_DATA :
+                            case Constants.RAW_DATA :
+
                                 data = data.replaceAll(Constants.RAW_DATA, "");
 
-                                int len = data.length();
-                                byte[] raw = new byte[len / 2];
-                                for (int i = 0; i < len; i += 2) {
-                                    raw[i / 2] = (byte) ((Character.digit(data.charAt(i), 16) << 4)
-                                            + Character.digit(data.charAt(i+1), 16));
+                                Byte [] rawData = new Byte[128*128];
+
+                                data = data.replaceAll(" ", "");
+
+                                int i=0 ;
+                                while(data != ""){
+                                    String str = data.substring(0, 8);
+                                    data = data.replaceFirst(str, "");
+                                    pixels[i] = Integer.parseInt(str, 2);
+                                    i++;
                                 }
 
-                                MoveFragment.testImage = raw ;
-                                break ;*/
+                                data = "" ;
+                                break ;
                         }
 
                     }
