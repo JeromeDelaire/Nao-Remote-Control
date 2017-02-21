@@ -55,14 +55,7 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/AutomaticRobotConnexionButton"
-        style="@style/Element"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/AutoConnexion"
-        android:textAllCaps="false" />
+    <include layout="@layout/divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,7 +64,7 @@
 
         <Spinner
             android:id="@+id/SpinnerRobotAdress"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:theme="@android:style/Theme.Holo.Light"
@@ -81,13 +74,16 @@
             android:id="@+id/RemoveRobotAdressButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/trash_state" />
+            android:background="@drawable/trash_state"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"/>
 
         <Button
             android:id="@+id/LoginRobotButton2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/login_state" />
     </LinearLayout>
 

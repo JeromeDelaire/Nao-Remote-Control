@@ -10,9 +10,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
         <TextView
             style="@style/SubTitle"
-            android:text="@string/ServerConnexion" />
+            android:text="@string/ServerConnexion"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"/>
+
+        <Button
+            android:id="@+id/ConnexionStatusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/logout_button"
+            android:minHeight="1dp"
+            android:minWidth="1dp"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:text="Deconnexion"
+            android:textSize="10dp"
+            android:textColor="@color/Primary"
+            android:visibility="gone"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +108,7 @@
 
             <Spinner
                 android:id="@+id/SpinnerServerAdress"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:theme="@android:style/Theme.Holo.Light"
@@ -95,6 +119,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/trash_state" />
 
             <Button
@@ -102,35 +127,13 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/login_state" />
         </LinearLayout>
 
-        <include layout="@layout/divider"/>
-
-        <TextView
-            style="@style/SubTitle"
-            android:text="@string/ConnexionStatus"/>
-
-        <TextView
-            android:id="@+id/ConnexionStatusTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Disconected"
-            android:layout_marginLeft="10dp"
-            style="@style/NormalText"/>
-
-        <Button
-            android:id="@+id/ConnexionStatusButton"
-            style="@style/Element"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:visibility="gone"
-            android:text="@string/Disconected" />
-
         <include layout="@layout/server_config"
             android:visibility="gone"
-            android:id="@+id/ServerConfigLayout"></include>
+            android:id="@+id/ServerConfigLayout"/>
 
     </LinearLayout>
 

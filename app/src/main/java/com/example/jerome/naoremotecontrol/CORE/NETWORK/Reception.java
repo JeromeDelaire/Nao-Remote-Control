@@ -14,6 +14,7 @@ import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Behavior;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Langage;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Leds;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Name;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Pixels;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Voice;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
@@ -230,16 +231,21 @@ public class Reception implements Runnable{
 
                                 data = data.replaceAll(" ", "");
 
-                                int i=0 ;
-                                while(data != ""){
-                                    String str = data.substring(0, 8);
-                                    data = data.replaceFirst(str, "");
-                                    pixels[i] = Integer.parseInt(str, 2);
-                                    i++;
+                                int j=0 ;
+                                for(int i=0 ; i<16384 ; i++){
+                                    pixels[i] = Integer.parseInt(data.substring(j, j+8), 2);
+                                    Pixels.setPixels(pixels);
+                                    j+=8;
                                 }
 
-                                data = "" ;
+                                data = "" ;//
                                 break ;
+
+                            //Si on ferme le serveur
+                            case Constants.DECONNEXION :
+                                com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.setConnected(false);
+                                break;
+
                         }
 
                     }

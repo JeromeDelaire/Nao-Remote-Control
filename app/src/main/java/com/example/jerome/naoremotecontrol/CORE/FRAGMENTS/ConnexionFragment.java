@@ -46,7 +46,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
             removeServerAdress, removeRobotAdress, connexionStatus,  autmaticServerLogin;
     private Spinner listServerAdress, listRobotAdress ;
     private static Server server ;
-    private TextView connexionState ;
     private View serverConfig ;
     private BufferedReader in ;
     private boolean majConnexion=false;
@@ -66,7 +65,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         super.onResume();
         if(Server.isConnect()){
             connexionStatus.setVisibility(View.VISIBLE);
-            connexionState.setText(R.string.Connected);
             serverConfig.setVisibility(View.VISIBLE);
         }
     }
@@ -87,7 +85,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
         waitConnexion = (ProgressBar) view.findViewById(R.id.WaitConnexionSpinner);
 
         connexionStatus = (Button) view.findViewById(R.id.ConnexionStatusButton);
-        connexionState = (TextView) view.findViewById(R.id.ConnexionStatusTextView);
         serverConfig = view.findViewById(R.id.ServerConfigLayout);
 
         // Widgets de connexion au robot
@@ -123,11 +120,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
                         @Override
                         public void run() {
                             if (Server.isConnect()) {
-                                connexionStatus.setVisibility(View.VISIBLE);
-                                connexionState.setText(R.string.Connected);
-                                serverConfig.setVisibility(View.VISIBLE);
-                                waitConnexion.setVisibility(View.GONE);
-                                autmaticServerLogin.setVisibility(View.VISIBLE);
 
                                 try {
                                     in = new BufferedReader(new InputStreamReader(Server.getSocket().getInputStream()));
@@ -138,9 +130,6 @@ public class ConnexionFragment extends Fragment implements View.OnClickListener 
                                 Thread thread_reception = new Thread(new Reception(getActivity(), in));
                                 thread_reception.start();
                             } else {
-                                connexionStatus.setVisibility(View.GONE);
-                                connexionState.setText(R.string.Disconected);
-                                serverConfig.setVisibility(View.GONE);
                                 if(connexionView == loginServer || connexionView == loginServer2)
                                     Toast.makeText(getContext(), R.string.ErrorConnectServer, Toast.LENGTH_SHORT).show();
                             }

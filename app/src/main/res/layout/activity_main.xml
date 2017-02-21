@@ -30,29 +30,60 @@
         android:layout_below="@id/tab_layout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/ViewPager"
-        android:paddingBottom="50dp">
+        android:paddingBottom="40dp"
+        android:background="@color/White">
 
     </android.support.v4.view.ViewPager>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/Primary"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="#e4e4e4"
+        android:layout_alignParentBottom="true">
 
+        <TextView
+            android:id="@+id/ServerStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ServerStatus"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:textColor="@color/Text"/>
+²
         <ImageView
+            android:id="@+id/ServerStatus"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/wifi_connected"/>
+            android:background="@drawable/wifi_disconnected"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@id/ServerStatusTextView"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/RobotStatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/RobotStatus"
+            android:textColor="@color/Text"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@id/ServerStatus"
+            android:layout_centerVertical="true"/>
 
         <ImageView
+            android:layout_toRightOf="@id/RobotStatusTextView"
+            android:id="@+id/RobotStatus"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/wifi_disconnected"/>
-    </LinearLayout>
+            android:background="@drawable/wifi_disconnected"
+            android:layout_margin="5dp"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
 

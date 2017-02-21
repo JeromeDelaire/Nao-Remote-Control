@@ -20,6 +20,10 @@ public interface Constants{
         String STOP_CONNEXION = "STP/";
         String ROBOT_IP = "RIP/" ;
 
+
+    //Deconnexion du serveur
+    String DECONNEXION = "DEC/" ;
+
     // Robot connecté
     String ROBOT_CONNECTED = "RBC/" ;
 

@@ -14,26 +14,26 @@
     <string name="TypeYourSpeech">Type your speech</string>
     <string name="ServerSettings">Server settings</string>
     <string name="ServerConnexion">Server connexion</string>
-    <string name="ServerAdress">Server adress</string>
-    <string name="SaveServer">Save server adress</string>
+    <string name="ServerAdress">Server address</string>
+    <string name="SaveServer">Save server address</string>
     <string name="ServerConfiguration">Server configuration</string>
-    <string name="ErrorIPNotValid">Please, enter a valid IP adress</string>
+    <string name="ErrorIPNotValid">Please, enter a valid IP address</string>
     <string name="ErrorNoItemSelected">The list does not contain any address</string>
     <string name="ErrorEmptyList">Empty list !</string>
     <string name="AutoConnexion">Automatic Login</string>
-    <string name="ErrorIPExists">This adress is already saved</string>
+    <string name="ErrorIPExists">This address is already saved</string>
     <string name="AdrressSavedSucces">The address was saved</string>
     <string name="ConnexionStatus">Connexion status</string>
     <string name="ErrorConnectServer">Connexion failed</string>
     <string name="ErrorAlreadyConnected">You are already connected on the server</string>
     <string name="AttemptingToConnectToServer">Attempting to connect to server...</string>
     <string name="RobotConnexion">Robot connexion</string>
-    <string name="RobotAdress">Robot adress</string>
+    <string name="RobotAdress">Robot address</string>
     <string name="SavedSpeeches">Saved speeches</string>
     <string name="Settings">Settings</string>
     <string name="Volume">Volume</string>
-    <string name="Langage">Langage</string>
-    <string name="Status">Status</string>
+    <string name="Langage">Language</string>
+    <string name="Status">State</string>
     <string name="Name">Name : </string>
     <string name="ChangeName">Change name</string>
     <string name="SpeechSaveSucces">Speech saved !</string>
@@ -41,7 +41,7 @@
     <string name="AnimatedSpeech">Animated speech</string>
     <string name="Move">Move</string>
     <string name="Dances">Dances</string>
-    <string name="Posture">Posture</string>
+    <string name="Posture">Postures</string>
     <string name="TakePosture">Take posture</string>
     <string name="Walk">Walk</string>
     <string name="Frequency">Frequency</string>
@@ -70,5 +70,12 @@
     <string name="ShutdownNao">Shutdown NAO</string>
     <string name="RebootNao">Reboot NAO</string>
     <string name="Help">Help</string>
+    <string name="ServerStatus">Server connexion</string>
+    <string name="RobotStatus">Robot connexion</string>
+    <string name="Deconnexion">Logout</string>
+    <string name="HelpIntroduction">In order to use this application, all you have to do is connect to your NAO robot. This can be done in three steps :</string>
+    <string name="HelpTitle1">1- Run the server</string>
+    <string name="HelpTitle2">2- Connect to the server</string>
+    <string name="HelpTitle3">3- Connect the server to the robot</string>
 
 </resources>

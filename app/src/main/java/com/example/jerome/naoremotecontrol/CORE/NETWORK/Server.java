@@ -41,12 +41,17 @@ public class Server implements Runnable {
         return state;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public static void setState(int st) {
+        state = st;
+    }
+
+    public static void setConnect(boolean connect) {
+        Server.connect = connect;
     }
 
     public static boolean isConnect() {
         return connect;
+
     }
 
     public void stopConnexion() {
@@ -56,7 +61,10 @@ public class Server implements Runnable {
             socket.close();
             state = 0 ;
             connect=false;
-            if (listener != null) listener.onChange();
+            if (listener != null){
+                listener.onChange();
+                com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.setConnected(false);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,18 +80,24 @@ public class Server implements Runnable {
     public void run() {
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress(dstAddress, dstPort), 100);
+            socket.connect(new InetSocketAddress(dstAddress, dstPort), 300);
             out = new PrintWriter(socket.getOutputStream());
             if(socket.isBound() && socket.isConnected()){
                 state = 1 ;
                 connect=true;
-                if (listener != null) listener.onChange();
+                if (listener != null) {
+                    com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.setConnected(true);
+                    listener.onChange();
+                }
             }
 
 
         } catch (IOException e) {
             state = -1 ;
-            if (listener != null) listener.onChange();
+            if (listener != null){
+                listener.onChange();
+                com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.setConnected(false);
+            }
             e.printStackTrace();
         }
     }

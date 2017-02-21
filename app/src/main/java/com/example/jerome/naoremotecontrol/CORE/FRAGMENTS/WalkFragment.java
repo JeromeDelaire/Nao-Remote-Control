@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Pixels;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Reception;
 import com.example.jerome.naoremotecontrol.R;
 
@@ -35,16 +36,32 @@ public class WalkFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
-        int   width  = 128 ;
-        int   height = 128 ;
 
         // You are using RGBA that's why Config is ARGB.8888
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        // vector is your int[] of ARGB
-        bitmap.copyPixelsFromBuffer(IntBuffer.wrap(Reception.pixels));
 
-        ImageView tv1;
-        tv1= (ImageView) view.findViewById(R.id.image);
-        tv1.setImageBitmap(bitmap);
+
+        Pixels pixels = new Pixels() ;
+        pixels.setListener(new Pixels.ChangeListener() {
+            @Override
+            public void onChange() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        int   width  = 128 ;
+                        int   height = 128 ;
+
+                        final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        // vector is your int[] of ARGB
+                        bitmap.copyPixelsFromBuffer(IntBuffer.wrap(Reception.pixels));
+
+                        ImageView tv1;
+                        tv1= (ImageView) getActivity().findViewById(R.id.image);
+                        tv1.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        });
+
     }
 }

@@ -74,6 +74,14 @@
             <item name="android:textColor">@color/Text</item>
         </style>
 
+        <style name="HelpTitles">
+            <item name="android:textColor">@color/Text</item>
+            <item name="android:layout_margin">10dp</item>
+            <item name="android:textSize">20sp</item>
+            <item name="android:textAllCaps">false</item>
+            <item name="android:textStyle">bold</item>
+        </style>
+
         <style name="BarTheme" parent="Widget.Design.TabLayout">
             <!--   your app branding color for the app bar -->
             <item name="colorPrimary">@color/Primary</item>

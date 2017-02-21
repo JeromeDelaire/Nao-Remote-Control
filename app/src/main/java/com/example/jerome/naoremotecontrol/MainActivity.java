@@ -1,5 +1,6 @@
 package com.example.jerome.naoremotecontrol;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -8,16 +9,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants.DIRECTORY_NAME;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ImageView robotStatus, serverStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        robotStatus = (ImageView) findViewById(R.id.RobotStatus);
+        serverStatus = (ImageView) findViewById(R.id.ServerStatus);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
@@ -34,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Status).setIcon(R.drawable.status_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Speech).setIcon(R.drawable.speech_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Move).setIcon(R.drawable.move_tab));
-        tabLayout.addTab(tabLayout.newTab().setText("Walk").setIcon(R.drawable.walk_tab));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Walk).setIcon(R.drawable.walk_tab));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.ViewPager);
@@ -58,21 +72,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       /* // Création de la liste de Fragments que fera défiler le PagerAdapter
-        List<Fragment> fragments = new Vector<>();
+        com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server serverListen = new com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server();
+        serverListen.setListener(new com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.ChangeListener() {
+            @Override
+            public void onChange() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Button connexionStatus = (Button) findViewById(R.id.ConnexionStatusButton);
+                        View serverConfig = findViewById(R.id.ServerConfigLayout);
+                        ProgressBar waitConnexion = (ProgressBar) findViewById(R.id.WaitConnexionSpinner);
+                        Button autmaticServerLogin = (Button) findViewById(R.id.AutomaticConnexionButton);
 
-        // Ajout des Fragments dans la liste
-        fragments.add(Fragment.instantiate(this,ConnexionFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this,StatusFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this,SpeechFragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, MoveFragment.class.getName()));
+                        if(com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.isConnected()){
 
-        // Création de l'adapter qui s'occupera de l'affichage de la liste de Fragments
-        PagerAdapter mPagerAdapter = new MyPagerAdapter(super.getSupportFragmentManager(), fragments);
 
-        ViewPager pager = (ViewPager) super.findViewById(R.id.ViewPager);
-        // Affectation de l'adapter au ViewPager
-        pager.setAdapter(mPagerAdapter);*/
+                            connexionStatus.setVisibility(View.VISIBLE);
+                            serverConfig.setVisibility(View.VISIBLE);
+                            waitConnexion.setVisibility(View.GONE);
+                            autmaticServerLogin.setVisibility(View.VISIBLE);
+
+                            serverStatus.setBackgroundResource(R.drawable.wifi_connected);
+
+                        }
+
+                        else{
+                            connexionStatus.setVisibility(View.GONE);
+                            serverConfig.setVisibility(View.GONE);
+
+                            serverStatus.setBackgroundResource(R.drawable.wifi_disconnected);
+                        }
+
+                    }
+                });
+            }
+        });
 
         // On crée un repertoire pour sauvegarder les données (s'il n'existe pas déjà)
         if(!FileOperator.createDirectory(DIRECTORY_NAME))
@@ -90,20 +124,24 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(Server.isConnect()){
+        if(Server.isConnect()) {
             // Pour éteindre le robot
-            if(id == R.id.shutdown){
+            if (id == R.id.shutdown) {
                 Server.send(Constants.SHUTDOWN);
             }
             // Pour redémarrer le robot
-            if(id == R.id.reboot){
+            if (id == R.id.reboot) {
                 Server.send(Constants.REBOOT);
             }
-            // Affiche le menu aide
-            if(id == R.id.help){
 
-            }
         }
+        // Affiche le menu aide
+        if(id == R.id.help){
+
+            Intent myIntent = new Intent(this.getApplicationContext(), HelpActivity.class);
+            startActivityForResult(myIntent, 0);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
