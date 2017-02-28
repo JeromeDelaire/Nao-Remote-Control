@@ -19,6 +19,25 @@
             style="@style/HelpTitles"
             android:text="@string/HelpTitle1"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/NormalText"
+                android:layout_weight="1"
+                android:text="@string/HelpRunServer"/>
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="75dp"
+                android:background="@drawable/nao_server"/>
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,8 +47,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/HelpConnectServer"
+            style="@style/NormalText"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             style="@style/HelpTitles"
             android:text="@string/HelpTitle3"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/HelpConnectRobot"
+            style="@style/NormalText"/>
 
     </LinearLayout>
 

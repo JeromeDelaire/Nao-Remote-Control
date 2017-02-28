@@ -79,5 +79,8 @@
     <string name="HelpTitle1">1- Lancer le serveur</string>
     <string name="HelpTitle2">2- Se connecter au serveur</string>
     <string name="HelpTitle3">3- Connecter le serveur au robot</string>
+    <string name="HelpRunServer">Sur un PC avec une distribution Linux, téléchargez et lancer le serveur en double_cliquant sur l\'îcone correspondante. Relevez l'adresse IP indiquée dans le terminal.</string>
+    <string name="HelpConnectServer">Depuis l'application, connectez-vous au serveur avec l'adresse IP relevée dans l'étape 1.</string>
+    <string name="HelpConnectRobot">Si vous êtes connecté au serveur, une nouvelle rubrique apparaît. Vous pouvez configurer le serveur pour qu'il se connecte au robot en indiquant son adresse IP (pour la connaître, appuyez sur le bouton au milieu de la poitrine de NAO.</string>
 
 </resources>

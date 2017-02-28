@@ -77,5 +77,7 @@
     <string name="HelpTitle1">1- Run the server</string>
     <string name="HelpTitle2">2- Connect to the server</string>
     <string name="HelpTitle3">3- Connect the server to the robot</string>
+    <string name="HelpRunServer">On a computer with a Linux Distribution, run NAO Server by double clicking on the icon</string>
+    <string name="HelpConnectServer">With the application , connect to the server with IP address of step 1.</string>
 
 </resources>
