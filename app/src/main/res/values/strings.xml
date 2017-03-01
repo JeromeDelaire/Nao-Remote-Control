@@ -79,5 +79,6 @@
     <string name="HelpTitle3">3- Connect the server to the robot</string>
     <string name="HelpRunServer">On a computer with a Linux Distribution, run NAO Server by double clicking on the icon</string>
     <string name="HelpConnectServer">With the application , connect to the server with IP address of step 1.</string>
+    <string name="HelpConnectRobot">Si vous êtes connecté au serveur, une nouvelle rubrique apparaît. Vous pouvez configurer le serveur pour qu\'il se connecte au robot en indiquant son adresse IP (pour la connaître, appuyez sur le bouton au milieu de la poitrine de NAO).</string>
 
 </resources>
