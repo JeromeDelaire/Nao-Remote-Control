@@ -1,6 +1,7 @@
 package com.example.jerome.naoremotecontrol.CORE.NETWORK;
 
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Battery;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.RobotConnexion;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class Server implements Runnable {
 
     public void stopConnexion() {
         try {
+            RobotConnexion.setConnected(false);
             out.println(CONFIGURATION + STOP_CONNEXION);
             out.flush();
             socket.close();

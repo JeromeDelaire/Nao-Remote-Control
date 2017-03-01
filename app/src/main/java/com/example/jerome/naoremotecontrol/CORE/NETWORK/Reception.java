@@ -16,6 +16,7 @@ import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Leds;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Name;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Pixels;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Posture;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.RobotConnexion;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Voice;
 import com.example.jerome.naoremotecontrol.CORE.LISTENERS.Volume;
 import com.example.jerome.naoremotecontrol.MainActivity;
@@ -186,6 +187,7 @@ public class Reception implements Runnable{
                             // Si le serveur viens de se connecter au robot
                             case Constants.ROBOT_CONNECTED :
                                 // Demande d'informations sur le robot au serveur
+                                RobotConnexion.setConnected(true);
                                 Server.send(Constants.GET + Constants.LANGAGES);
                                 Server.send(Constants.GET + Constants.VOICES);
                                 Server.send(Constants.GET + Constants.VOLUME);
@@ -243,6 +245,7 @@ public class Reception implements Runnable{
 
                             //Si on ferme le serveur
                             case Constants.DECONNEXION :
+                                RobotConnexion.setConnected(false);
                                 com.example.jerome.naoremotecontrol.CORE.LISTENERS.Server.setConnected(false);
                                 break;
 

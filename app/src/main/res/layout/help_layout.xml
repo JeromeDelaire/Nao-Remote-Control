@@ -35,7 +35,9 @@
             <ImageView
                 android:layout_width="96dp"
                 android:layout_height="75dp"
-                android:background="@drawable/nao_server"/>
+                />
+                <!--android:background="@drawable/nao_server"-->
+
 
         </LinearLayout>
 

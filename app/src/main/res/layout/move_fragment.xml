@@ -85,7 +85,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                style="@style/Element"
+                android:background="@drawable/arrow_state"
+                android:rotation="270"
                 android:id="@+id/TowardButton"
                 android:layout_margin="5dp" />
 
@@ -93,7 +94,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            style="@style/Element"
+            android:background="@drawable/circle_state"
             android:id="@+id/StopButton"
             android:layout_below="@id/TowardButton"
             android:layout_margin="5dp" />
@@ -101,7 +102,8 @@
             <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                style="@style/Element"
+                android:background="@drawable/arrow_state"
+                android:rotation="180"
                 android:id="@+id/LeftButton"
                 android:layout_margin="5dp"
                 android:layout_toLeftOf="@id/StopButton"
@@ -110,7 +112,7 @@
             <Button
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                style="@style/Element"
+                android:background="@drawable/arrow_state"
                 android:id="@+id/RightButton"
                 android:layout_margin="5dp"
                 android:layout_below="@id/TowardButton"
@@ -119,11 +121,13 @@
             <Button
                 android:layout_width="50sp"
                 android:layout_height="50dp"
+                android:background="@drawable/arrow_state"
                 android:layout_centerHorizontal="true"
-                style="@style/Element"
+                android:rotation="90"
                 android:id="@+id/BackwardButton"
                 android:layout_margin="5dp"
-                android:layout_below="@id/StopButton" />
+                android:layout_below="@id/StopButton"
+                />
 
         </RelativeLayout>
 

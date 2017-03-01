@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jerome.naoremotecontrol.CORE.INTERFACES.Constants;
+import com.example.jerome.naoremotecontrol.CORE.LISTENERS.RobotConnexion;
 import com.example.jerome.naoremotecontrol.CORE.NETWORK.Server;
 import com.example.jerome.naoremotecontrol.GLOBAL.FileOperator;
 
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Status).setIcon(R.drawable.status_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Speech).setIcon(R.drawable.speech_tab));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Move).setIcon(R.drawable.move_tab));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.Walk).setIcon(R.drawable.walk_tab));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.ViewPager);
@@ -103,6 +103,22 @@ public class MainActivity extends AppCompatActivity {
                             serverStatus.setBackgroundResource(R.drawable.wifi_disconnected);
                         }
 
+                    }
+                });
+            }
+        });
+
+        final RobotConnexion robotListen = new RobotConnexion();
+        robotListen.setListener(new RobotConnexion.ChangeListener() {
+            @Override
+            public void onChange() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(robotListen.isConnected())
+                            robotStatus.setBackgroundResource(R.drawable.wifi_connected);
+                        else
+                            robotStatus.setBackgroundResource(R.drawable.wifi_disconnected);
                     }
                 });
             }

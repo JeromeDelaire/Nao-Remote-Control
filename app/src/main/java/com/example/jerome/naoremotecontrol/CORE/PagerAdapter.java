@@ -8,7 +8,6 @@ import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.ConnexionFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.MoveFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.SpeechFragment;
 import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.StatusFragment;
-import com.example.jerome.naoremotecontrol.CORE.FRAGMENTS.WalkFragment;
 
 /**
  * Created by Jerome on 01/11/2016.
@@ -40,9 +39,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 3 :
                 MoveFragment tab4 = new MoveFragment();
                 return tab4;
-            case 4 :
-                WalkFragment tab5 = new WalkFragment();
-                return tab5 ;
             default:
                 return null;
         }
